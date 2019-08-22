@@ -11,8 +11,8 @@ window.onload = function(){
 
     (async function process(){
         init();
-        await eventTrigger();
         await loadLocalStorage()
+        await eventTrigger();
         rendering();
     })();
 
@@ -52,9 +52,11 @@ window.onload = function(){
         /* 연도 설정 */
         let s_year = filter.find(x => x.key === "dev_start").value;
         let s_cat = filter.find(x => x.key === "main_lang").value;
+        console.log(s_cat);
 
         /* 해당 카테고리가 연도 내에 존재하지 않으면 필터 조건 삭제 */
-        if(!categories.find(x => new RegExp(s_year).test(x.year)).data.find(x => x.name === s_cat)){
+        if(!categories.find(x => new RegExp(s_year).test(x.year)).data.find(x => new RegExp(s_cat).test(x.name))){
+            console.log("!");
             filter.find(x => x.key === "main_lang").value = ".+";
             s_cat = ".+";
         }
@@ -88,7 +90,7 @@ window.onload = function(){
         cat_div.append(s_all);
 
         categories.find(x => new RegExp(s_year).test(x.year)).data.forEach(x => {
-            let cat = `<div class="item ${s_cat === x.name ? "active " : ""}f_option" data-value="${x.name}">
+            let cat = `<div class="item ${new RegExp(s_cat).test(x.name) && s_cat !== ".+" ? "active " : ""}f_option" data-value="^${x.name}$">
                             <span class="name no-mouse">
                                 ${x.name}
                             </span>
@@ -341,8 +343,19 @@ window.onload = function(){
     function setFilter(e){
         let key = e.target.parentElement.dataset.key;
         let value = e.target.dataset.value;
-        let find = filter.find(x => x.key === key);
-        find ? find.value = value : filter.push({key: key, value: value});
+        let find = filter.findIndex(x => x.key === key);
+
+
+        // console.log(e.target, key, value);
+
+        console.log(filter[find]);
+        if(find >= 0) {
+            filter[find].value = value;
+            console.log(filter[find]);
+            // console.log(find, filter[find].value, filter[find]);
+        }
+        else filter.push({key: key, value: value});
+        console.log(filter);
         rendering();
     }
 

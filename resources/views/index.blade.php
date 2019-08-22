@@ -3,6 +3,7 @@
 @push("head")
     <link rel="stylesheet" href="/assets/css/index.css" type="text/css">
     <script type="text/javascript" src="/assets/js/app.js"></script>
+    
 @endpush
 
 
@@ -64,7 +65,7 @@
                     <li class="card">
                         <div class="card-head" style="background-color: {{$project->back_color}};">
                             <div class="image">
-                                <img src="/files/{{$project->saved_folder}}/{{$project->thumbnail}}" alt="{{$project->title}}">
+                                <img src="/files/projects/{{$project->saved_folder}}/{{$project->thumbnail}}" alt="{{$project->title}}">
                             </div>
                         </div>
                         <div class="card-body">
