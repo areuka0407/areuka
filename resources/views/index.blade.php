@@ -3,7 +3,7 @@
 @push("head")
     <link rel="stylesheet" href="/assets/css/index.css" type="text/css">
     <script type="text/javascript" src="/assets/js/app.js"></script>
-    
+    <script type="text/javascript" src="/assets/js/search.js"></script>
 @endpush
 
 
@@ -12,11 +12,11 @@
 <div id="visual" class="outside">
     <div class="inside">
         <div class="main-text"></div>
-        <form id="search" autocomplete="off">
+        <form id="search" class="no-submit" autocomplete="off" onsubmit="return false">
             <div class="search-bar">
-                <input type="text" name="keyword" placeholder="키워드 검색을 통해서 그동안 만든 작품들을 살펴보세요!" title="키워드를 입력해 주세요!" required>
+                <input type="text" id="m-search" class="search-bar" name="keyword" placeholder="키워드 검색을 통해서 그동안 만든 작품들을 살펴보세요!" title="키워드를 입력해 주세요!" required>
             </div>
-            <button type="submit" class="search-btn" title="검색하기"></button>
+            <button type="submit" class="search-btn" data-input="m-search" title="검색하기"></button>
         </form>
     </div>
 </div>

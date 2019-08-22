@@ -3,6 +3,7 @@
 @push("head")
     <link rel="stylesheet" href="/assets/css/articles/list.css">
     <script src="/assets/js/articles/list.js" type="text/javascript"></script>
+    <script src="/assets/js/search.js"></script>
 @endpush
 
 @section("contents")
@@ -17,6 +18,10 @@
                         프로젝트 일람
                     </span>
                 </div>
+                <form id="search" onsubmit="return false" autocomplete="off">
+                    <input type="text" id="search-input" class="search-bar" placeholder="검색어를 입력하세요.">
+                    <button class="search-btn" data-input="search-input"></button>
+                </form>
                 @if (admin())
                     <a href="{{ route("projects.write")  }}" class="post-btn f-right">
                         새 프로젝트 +
