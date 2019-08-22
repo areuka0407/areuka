@@ -10,6 +10,7 @@ window.onload = function(){
     var projects;
 
     (async function process(){
+
         init();
         await loadLocalStorage()
         await eventTrigger();
@@ -52,7 +53,6 @@ window.onload = function(){
         /* 연도 설정 */
         let s_year = filter.find(x => x.key === "dev_start").value;
         let s_cat = filter.find(x => x.key === "main_lang").value;
-        console.log(s_cat);
 
         /* 해당 카테고리가 연도 내에 존재하지 않으면 필터 조건 삭제 */
         if(!categories.find(x => new RegExp(s_year).test(x.year)).data.find(x => new RegExp(s_cat).test(x.name))){
@@ -106,11 +106,18 @@ window.onload = function(){
         /* 정렬 select 설정 */
         sel(".o_select > option[data-key='"+order.key+"'][value='"+order.value+"']").selected = true;
 
+        /* 검색 메세지 설정 */
+        let keyword = filter.find(x => x.key === "title");
+        sel("input.search-bar").value = keyword ? keyword.value.substr(3, keyword.value.length - 6) : "";
+
         /* 글 로드 */
         let view_list = JSON.parse(JSON.stringify(projects));
 
         /* 필터링 */
-        filter.forEach(item => view_list = view_list.filter(x => new RegExp(item.value).test(x[item.key])));
+        filter.forEach(item => {
+            // console.log(item);
+            view_list = view_list.filter(x => new RegExp(item.value).test(x[item.key]))
+        });
 
 
         /* 글 정렬 */
@@ -175,6 +182,14 @@ window.onload = function(){
             {key: "dev_start", value: "^2018.*"},
             {key: "main_lang", value: ".+"}
         ];
+
+        /* filter에 dev_start / main_lang 이 없으면 추가 */
+        if(!filter.find(x => x.key === "dev_start"))
+            filter.push({key: "dev_start", value: "^2018.*"});
+        if(!filter.find(x => x.key === "main_lang"))
+            filter.push({key: "main_lang", value: ".+"});
+
+
         order = order || {key: "title", value : 0};
         projects = projects || await loadData();
         categories = categories || await loadCategories();
@@ -345,17 +360,8 @@ window.onload = function(){
         let value = e.target.dataset.value;
         let find = filter.findIndex(x => x.key === key);
 
-
-        // console.log(e.target, key, value);
-
-        console.log(filter[find]);
-        if(find >= 0) {
-            filter[find].value = value;
-            console.log(filter[find]);
-            // console.log(find, filter[find].value, filter[find]);
-        }
+        if(find >= 0) filter[find].value = value;
         else filter.push({key: key, value: value});
-        console.log(filter);
         rendering();
     }
 

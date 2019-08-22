@@ -19,7 +19,9 @@
         <script type="text/javascript">
             alert('{{session("flash_message")}}');
         </script>
+        @php(session()->forget("flash_message"))
     @endif
+
 
     {{--Yield--}}
     @stack("head")

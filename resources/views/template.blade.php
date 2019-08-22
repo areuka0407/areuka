@@ -24,7 +24,7 @@
                 <a class="item{{!empty($page_name) && $page_name === "tryouts" ? " active" : ""}}" href="{{ route("tryouts.home") }}">
                     <span class="nav-name">삽질 일기</span>
                 </a>
-                <a class="item{{!empty($page_name) && $page_name === "clubs" ? " active" : ""}}" href="{{ route("clubs.home") }}">
+                <a class="item{{!empty($page_name) && $page_name === "practices" ? " active" : ""}}" href="{{ route("practices.home") }}">
                     <span class="nav-name">기능대회 준비</span>
                 </a>
             </nav>

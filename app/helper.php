@@ -1,9 +1,20 @@
 <?php
 
-/**
- * DS :: Directory Separator
- */
 define("DS", DIRECTORY_SEPARATOR);
+define("LOGIN_MESSAGE", "로그인 후 이용할 수 있습니다.");
+define("AUTH_MESSAGE", "권한이 없습니다.");
+
+/**
+ * user() :: 현재 접속한 유저가 로그인했는지 확인한다
+ *
+ * @return :: 로그인 했다면 해당 유저의 정보를, 아니라면 false를 반환한다.
+ */
+
+ if(!function_exists("user")){
+     function user(){
+         return auth()->check() ? auth()->user() : false;
+     }
+ }
 
 /*
 * admin :: 현재 접속한 유저가 관리자인지 확인한다

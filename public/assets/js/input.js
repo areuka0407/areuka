@@ -128,7 +128,8 @@ $(function(){
     */
     var f_input = $(".custom-file input[type='file']");
     var help_messages = [
-        "해당 프로젝트의 실행 파일을 업로드 하세요!"
+        "해당 프로젝트의 실행 파일을 업로드 하세요!",
+        "해당 문제의 풀이 파일을 업로드 하세요!"
     ];
     $.each(f_input, function(idx, item){
         var text = $(item).siblings("label:not(.upload-btn)").text().trim();

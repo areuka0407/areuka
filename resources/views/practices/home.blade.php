@@ -15,7 +15,7 @@
                 <div class="section-title">
                     <span>
                         <div class="design-box"></div>
-                        프로젝트 일람
+                        기능대회 준비
                     </span>
                 </div>
                 <form id="search" onsubmit="return false" autocomplete="off">
@@ -23,8 +23,8 @@
                     <button class="search-btn" data-input="search-input"></button>
                 </form>
                 @if (admin())
-                    <a href="{{ route("projects.write")  }}" class="post-btn f-right">
-                        새 프로젝트 +
+                    <a href="{{ route("practices.write")  }}" class="post-btn f-right">
+                        연습활동 추가 +
                     </a>
                 @endif
             </div>

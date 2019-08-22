@@ -2,6 +2,10 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AllowOnlyAdmin;
+use App\Http\Middleware\AllowOnlyAuth;
+use App\Http\Middleware\AllowOnlyLogin;
+use App\Http\Middleware\AllowOnlyUser;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -60,6 +64,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'allow.auth' => AllowOnlyAuth::class,
+        'allow.login' => AllowOnlyLogin::class
     ];
 
     /**

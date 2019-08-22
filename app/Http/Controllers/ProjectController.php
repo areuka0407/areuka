@@ -16,34 +16,6 @@ class ProjectController extends Controller
     {
         if(!auth()->user()) return redirect()->route("users.login")->with("flash_message", "로그인 후 이용하실 수 있습니다.");
         $data = $this->data;
-
-        /*
-
-        // 카테고리 중복 제거
-        $raw_langs = Project::distinct()->where("dev_start", "like", "$year%")->get("main_lang");
-        $data['langs'] = [];
-        foreach($raw_langs as $lang){
-            $lang = explode("|", $lang['main_lang'])[0];
-            if(!in_array($lang, $data['langs'])) {
-                $cnt = Project::where("main_lang", "like", "%$lang%")->count();
-                array_push($data['langs'], ['name' => $lang, 'count' => $cnt]);
-            }
-        }
-        // ALL 카테고리 개수
-        $data['total_langs_cnt'] = 0;
-        foreach($data['langs'] as $item){
-            $data['total_langs_cnt'] += $item['count'];
-        }
-
-        $data['projects'] = Project::where("dev_start", "like", "$year%")->get();
-
-        //  프로젝트의 태그, 주 언어 구분
-        foreach($data['projects'] as $idx => $project){
-            $data['projects'][$idx]->main_lang = explode("|", $project->main_lang)[0];
-            $data['projects'][$idx]->hash_tag = array_slice(explode("|", $project->hash_tag), 0, 4);
-        }
-
-        */
         return view("projects.home", $data);
     }
 
@@ -74,7 +46,7 @@ class ProjectController extends Controller
             "back_color" => ["required", "regex:/^#[a-fA-F0-9]{0,6}$/"],
             "font_color" => ["required", "regex:/^#[a-fA-F0-9]{0,6}$/"],
             "hash_tag" => "required",
-            "root" => ["required", "regex:/^.+\\.(js|php|html)$/"],
+            "root" => ["required", "regex:/^\\/.+\\.(js|php|html)$/"],
             "dev_start" => ["required", "date_format:Y-m-d"],
             "dev_end" => ["required", "date_format:Y-m-d"],
         ];
@@ -85,7 +57,7 @@ class ProjectController extends Controller
             "back_color.regex" => "올바른 색상을 입력해 주세요.",
             "font_color.regex" => "올바른 색상을 입력해 주세요.",
             "root.regex" => "올바른 파일 경로를 설정해 주세요.",
-            "date_format" => "올바른 날짜 형식을 입력해 주세요.",
+            "date_format" => "올바른 날짜를 입력해 주세요.",
         ];
 
         $validator = Validator::make($data, $rules, $errors);
