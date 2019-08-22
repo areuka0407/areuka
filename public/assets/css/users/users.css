@@ -1,0 +1,81 @@
+#users-container .inside {
+    padding-top: 30px;
+}
+
+#users-container .contents {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 650px;
+    background-color: #fff;
+    margin: 0 auto;
+    padding: 50px 100px;
+    border: 1px solid #ddd;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+#users-container form {
+    width: 450px;
+    margin: 30px auto 0;
+}
+#users-container .form-group {
+    margin: 10px 0;
+}
+
+#users-container .form-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+#users-container .submit-btn {
+    width: 100%;
+    height: 60px;
+    background-color: #2685B5;
+    color: #fff;
+    font-size: 1.2rem;
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+#users-container .submit-btn[disabled] {
+    opacity: 0.5;
+}
+
+
+.form-item {
+    height: 50px;
+    font-size: 0.9rem;
+    line-height: 50px;
+}
+
+#login-maintain { display: none; }
+label[for='login-maintain'] {
+    padding-left: 30px;
+    background-image: url("../images/login/checkbox-disable.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+#login-maintain:checked + label {
+    background-image: url("../images/login/checkbox-enable.png");
+}
+
+.find-info {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.find-info > a {
+    margin: 0 10px;
+    font-size: 0.85rem;
+    color: #7E7E7E;
+}
+
+.find-info .bar {
+    display: inline-block;
+    width: 1px; height: 15px;
+    background-color: #D3D3D3;
+    margin: 0 10px;
+}

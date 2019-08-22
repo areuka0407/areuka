@@ -1,0 +1,70 @@
+#project-view {
+    min-height: 700px;
+}
+
+#project-view .infomation {
+    height: 300px;
+}
+
+#project-view .image-wrap {
+    height: 300px;
+    padding: 20px;
+}
+
+#project-view .image {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
+#project-view .info {
+    padding: 0 20px;
+}
+
+#project-view .info-group {
+    width: 100%;
+    min-height: 50px;
+    margin: 15px 0;
+}
+
+#project-view .col {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: rgb(43, 42, 46);
+    margin-bottom: 10px;
+}
+
+#project-view .val {
+    color: rgb(51, 51, 51);
+}
+
+#project-view .vals {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#project-view .vals > span {
+    margin: 0 10px;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+#main-lang > span.val {
+    background-color: #2d85e9;
+    color: #fff;
+}
+#hash-tag > span.val {
+    padding: 5px;
+    color: rgb(124, 124, 124);
+}
+
+#project-view .vals > span:first-child { margin-left: 0; }
+#project-view .vals > span:last-child { margin-right: 0; }
+
+#project-view .description {
+    min-height: 400px;
+}

@@ -1,0 +1,351 @@
+@charset "UTF-8";
+
+.list-container {
+    min-height: 300px;
+}
+
+/*
+ 섹션 헤더
+ */
+
+.section-header {
+    position: relative;
+    height: 150px;
+}
+
+/* 섹션 타이틀 */
+
+.section-title {
+    width: 550px;
+    height: 150px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 50px 0;
+}
+
+.section-title span {
+    position: relative;
+    display: inline-block;
+    width: 200px; height: 50px;
+    line-height: 50px;
+    color: #2C5775;
+    background-color: #FCFCFC;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.section-title .design-box {
+    z-index: -1;
+    position: absolute;
+    top: -20px; left: -30px;
+    width: 90px;
+    height: 90px;
+    border: 2px solid #1E6B9E;
+}
+
+.section-title .design-box::before {
+    content: '';
+    position: absolute;
+    left: -2px; bottom: -2px;
+    width: 30px; height: 30px;
+    background-color: #FCFCFC;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #1E6B9E #1E6B9E transparent transparent;
+}
+
+.section-title .design-box::after {
+    content: '';
+    position: absolute;
+    left: -20px; bottom: -20px;
+    width: 40px; height: 40px;
+    border: 2px solid #1E6B9E;
+}
+
+
+/* 글쓰기 버튼 */
+.post-btn {
+    position: absolute;
+    right: 0; bottom : 0;
+    padding: 10px 25px;
+    background-color: #79C92D;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+
+/*
+Section Body
+ */
+
+.section-body { min-height: 300px; margin-top: 20px; }
+
+
+/*
+시간대 설정 Section Time
+ */
+
+.section-time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+}
+
+.section-time > .item {
+    width: calc((100% - 40px) / 3);
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    background-color: #4D6199;
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    transition: width 0.5s, height 0.5s, line-height 0.5s, background-color 0.5s;
+}
+
+.section-time > .item.active {
+    background-color: #fff;
+    width: calc((100% - 20px) / 3);
+    height: 120px;
+    line-height: 120px;
+}
+
+.section-time > .item > span {
+    position: relative;
+    margin-left: 5px;
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: bold;
+    transition: color 0.5s, font-size 0.5s;
+}
+
+.section-time > .item.active span {
+    color: #79B52C;
+    font-size: 2rem;
+}
+
+.section-time > .item:first-child { margin: 0; }
+.section-time > .item:last-child { margin: 0; }
+
+.section-time > .item img {
+    position: absolute;
+    right: calc(100% + 10px);
+    bottom: 0;
+}
+
+.section-time > .item img { opacity: 1; transition: opacity 0.5s, width 0.5s, height 0.5s; }
+.section-time > .item img.active { opacity: 0; }
+.section-time > .item.active img { opacity: 0; }
+.section-time > .item.active img.active { opacity: 1; }
+
+
+/*
+카테고리 및 정렬  Section Category
+ */
+
+.section-category {
+    display: inline-block;
+    width: 100%;
+    min-height: 50px;
+    margin-top: 20px;
+    background-color: #fff;
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+}
+
+.categories {
+    width: calc(100% - 180px);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.categories .item {
+    position: relative;
+    display: inline-block;
+    height: 40px;
+    line-height: 35px;
+    margin: 10px 20px;
+    padding-left: 10px;
+    padding-right: 50px;
+    border: 2px solid #2F61B2;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.categories .item.active {
+    border: 2px solid #96C638;
+}
+
+.categories .name {
+    color: #2F61B2;
+    font-size: 1rem;
+}
+
+.categories .item.active .name {
+    color: #96C638;
+}
+
+.categories .count {
+    position: absolute;
+    left: calc(100% - 35px);
+    top: -2px;
+    min-width: 40px;
+    height: 40px;
+    padding: 5px 10px;
+    text-align: center;
+    line-height: 30px;
+    background-color: #2F61B2;
+    border-radius: 20px;
+    color: #fff;
+}
+
+.categories .item.active .count {
+    background-color: #96C638;
+}
+
+.sort { width: 180px; height: 100%; }
+
+.sort select {
+    width: 180px;
+    margin-top: 15px;
+    border: none;
+    font-size: 1rem;
+    color: #4D6199;
+}
+
+/*
+작품 목록 SectionList
+ */
+
+.section-list {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 10px 0 50px;
+    min-height: 350px;
+}
+
+.section-card {
+    width: calc((100% - 45px) / 4);
+    height: 350px;
+    margin: 10px 15px 10px 0;
+    background-color: #fff;
+    box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s;
+}
+.section-card:nth-child(4n){ margin: 10px 0; }
+
+
+.section-card:hover {
+    opacity: 0.7;
+}
+
+.section-card .image {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.section-card .image img {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%; max-height: 100%;
+}
+
+.section-card .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 150px;
+    padding: 10px 0;
+}
+.section-card .info-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+}
+
+.section-card .title {
+    font-size: 1.2rem;
+}
+
+.section-card .hash-box {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    width: 100%; height: 60px;
+    padding: 0 5px;
+    overflow: hidden;
+}
+
+.section-card .hash-tag {
+    max-width: 100%;
+    margin: 0 10px 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9em;
+    color: #6E6E6E;
+}
+
+.section-card .calender {
+    height: 30px;
+    line-height: 30px;
+}
+
+.section-card .calender img {
+    width: 30px; height: 30px;
+    float: left; margin-right: 10px;
+}
+
+.section-card .calender span {
+    color: #8E8E8E; font-size: 0.9rem;
+}
+
+.section-card .lang {
+    padding: 1px 20px;
+    border: #384BBA 2px solid;
+    border-radius: 20px;
+    color: #384BBA;
+    font-size: 0.9rem;
+}
+
+
+
+/*
+Refresh_btn :: 새로고침 버튼
+*/
+
+.refresh-btn {
+    position: fixed;
+    bottom: 50px; right: 50px;
+    width: 80px; height: 80px;
+    background-color: rgb(147, 182, 81);
+    padding: 15px;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.refresh-btn img {
+    width: 100%; height:100%;
+    transition: 1s transform;
+}
+
+.refresh-btn:hover img {
+    transform: rotate(-180deg);
+    transition: 0.5s transform;
+}

@@ -1,0 +1,162 @@
+@charset "UTF-8";
+
+/*
+Picker Trigger
+*/
+
+
+.color-picker-wrap {
+    position: relative;
+    width: 30px; height: 30px;
+    overflow: hidden;
+    background-color: #ccc;
+}
+
+.color-picker-wrap .bar {
+    position: absolute;
+    top: 0; left: 0;
+    border-style: solid;
+    border-color: #2685B5 transparent transparent #2685B5;
+    border-width: 0;
+    transition: border-width 1s;
+}
+
+.color-picker {
+    position: absolute;
+    left: 2px; top: 2px;
+    display: inline-block;
+    width: 26px; height: 26px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+
+/*
+Color Picker
+ */
+
+
+#colorPicker {
+    display: none;
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 470px; height: 320px;
+    /* transform: translate(-50%, -50%); */
+    background-color: #fff;
+    box-shadow: 1px 1px 5px 3px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 10px;
+}
+
+#colorPicker .close {
+    position: absolute;
+    right: 20px; top: 10px;
+    font-size: 1.4rem;
+    cursor: pointer;
+}
+
+/*Main Select*/
+
+#colorPicker .main-select-box {
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
+
+#colorPicker .main-select-box .select {
+    position: absolute;
+    left: 0; top: 0;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+#colorPicker .main-select-box .select::before {
+    content: '';
+    position: absolute;
+    top: -5px; left: -5px;
+    display: inline-block;
+    width: 10px; height: 10px;
+    border: 2px solid #343a40;
+    border-radius: 50%;
+}
+
+#colorPicker .main-select-box .select span {
+    content: '';
+    position: absolute;
+    top: -9px; left: -9px;
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 4px solid #ddd;
+    border-radius: 50%;
+}
+
+/*Sub Select*/
+
+#colorPicker .sub-select-box {
+    position: relative;
+    width: 30px;
+    height: 300px;
+}
+
+#colorPicker .sub-select-box .select {
+    position: absolute;
+    top: 0; left: 15px;
+    pointer-events: none;
+}
+
+#colorPicker .sub-select-box .select::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -17px;
+    width: 34px; height: 5px;
+    border: 2px solid #343a40;
+    border-radius: 3px;
+}
+
+#colorPicker .sub-select-box canvas {
+    position: absolute;
+    left: 0; top: 0;
+}
+
+/*Color Form*/
+
+#colorPicker .color-form {
+    width: 90px;
+    height: 300px;
+    margin-left: 20px;
+    padding-top: 50px;
+}
+
+#colorPicker .form-group {
+    margin: 5px 0;
+}
+
+#colorPicker .pre-view {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ddd;
+    background-color: rgb(255, 255, 255);
+}
+
+
+#colorPicker .form-group label {
+    font-weight: bold;
+    font-size: 1.05rem;
+}
+
+
+#colorPicker .color-form input {
+    width: 40px;
+    margin-left: 20px;
+    border: 1px solid transparent;
+    font-size: 1rem;
+}
+
+#colorPicker .color-form input:focus {
+    border: 1px solid #ddd;
+}
+
+#colorPicker #color-hex {
+    width: 60px;
+    margin-left: 0;
+}

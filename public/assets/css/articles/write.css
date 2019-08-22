@@ -1,0 +1,162 @@
+@charset "UTF-8";
+
+#write .form-box {
+    min-height: 100px;
+    padding: 50px;
+    background-color: #fff;
+    box-shadow: 1px 1px 3px 2px rgba(0, 0, 0, 0.1);
+}
+
+#write .section-title {
+    position: relative;
+    display: inline-block;
+    margin: 20px 50px;
+}
+
+#write .section-title p {
+    position: relative;
+    background-color: #fff;
+    font-size: 1.9rem;
+    color: #2C5775;
+    font-weight: bold;
+    z-index: 1;
+}
+
+#write .section-title .design-box {
+    content: '';
+    position: absolute;
+    right: -2.5em; top: -1em;
+    width: 5em; height: 5em;
+    border: 1.5px solid #1E6B9E;
+}
+
+#write .section-title .design-box::before {
+    content: '';
+    position: absolute;
+    right: -1.5px; top: -1.5px;
+    width: 2em; height: 2em;
+    background-color: #fff;
+    border-style: solid;
+    border-width: 1.5px;
+    border-color: transparent transparent #1E6B9E #1E6B9E;
+}
+
+#write .section-title .design-box::after {
+    content: '';
+    position: absolute;
+    right: -10px; top: -10px;
+    width: 2em; height: 2em;
+    border: 1.5px solid #1E6B9E;
+}
+
+
+#write form {
+    min-height: 600px;
+    margin-top: 80px;
+}
+
+#write .form-group {
+    width: 100%;
+    padding: 20px 30px;
+}
+
+#write .form-group .form-label {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #4F5452;
+}
+
+#write .form-group input[type='color'],
+#write .form-group input[type='file']
+{ display: none; }
+
+#write .preview-thumbnail {
+  display: block;
+  width: 250px;
+  height: 150px;
+  background-color: #F2F7F5;
+  background-image: url(/assets/images/icons/camera.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#write button {
+    border-radius: 0;
+    font-size: 1.1rem;
+    padding: 10px 40px;
+}
+
+#write button[type="submit"] {
+    background-color: #21537B;
+    color: #fff;
+}
+
+#write .tag-box {
+    width: 460px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+#write .tag-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    background-color: #ddd;
+    width: 100%; height: 100%;
+}
+
+.tag-box .input-area {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: calc(100% - 4px);
+    height: calc(100% - 4px);
+    overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.tag-box .value { display: none; }
+
+#write .tag-box .input {
+    position: static;
+    display: inline-block;
+    border: none;
+    outline: none;
+    background: #e8e8e8;
+    text-align: center;
+    color: #3F3F40;
+    border-radius: 10px;
+    width: 100px;
+    height: 35px;
+    padding: 5px 10px;
+    margin: 5px 10px;
+}
+
+#write .tag-box .input[data-name="언어"] {
+    width: 130px;
+}
+
+
+#write .tag-box .v_tag {
+    margin : 5px 10px;
+    padding: 5px 10px;
+    background-color: #E8E8E8;
+    color: #3F3F40;
+    border-radius: 10px;
+}
+
+#write .tag-box .bar {
+    position: absolute;
+    left: 0; top: 0;
+    border-style: solid;
+    border-width: 0;
+    border-color: #2685B5 transparent transparent #2685B5;
+    transition: 2s border-width;
+}
