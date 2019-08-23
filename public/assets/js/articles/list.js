@@ -7,12 +7,12 @@ window.onload = function(){
     var categories;
     var filter;
     var order;
-    var projects;
+    var dataList;
 
     (async function process(){
-
         init();
         await loadLocalStorage()
+        console.log(dataList, filter);
         await eventTrigger();
         rendering();
     })();
@@ -56,7 +56,6 @@ window.onload = function(){
 
         /* 해당 카테고리가 연도 내에 존재하지 않으면 필터 조건 삭제 */
         if(!categories.find(x => new RegExp(s_year).test(x.year)).data.find(x => new RegExp(s_cat).test(x.name))){
-            console.log("!");
             filter.find(x => x.key === "main_lang").value = ".+";
             s_cat = ".+";
         }
@@ -111,13 +110,18 @@ window.onload = function(){
         sel("input.search-bar").value = keyword ? keyword.value.substr(3, keyword.value.length - 6) : "";
 
         /* 글 로드 */
-        let view_list = JSON.parse(JSON.stringify(projects));
+        let view_list = JSON.parse(JSON.stringify(dataList));
 
         /* 필터링 */
+        console.log("original", view_list);
         filter.forEach(item => {
-            // console.log(item);
-            view_list = view_list.filter(x => new RegExp(item.value).test(x[item.key]))
+            console.log(view_list);
+            if(view_list.find(x => x[item.key]) == true)
+            {
+                view_list = view_list.filter(x => new RegExp(item.value).test(x[item.key]))
+            }
         });
+        console.log("new", view_list);
 
 
         /* 글 정렬 */
@@ -139,14 +143,15 @@ window.onload = function(){
         view_div.innerHTML = '';
         view_list.forEach(x => {
             let dev_date = new Date(x.dev_start);
-            let view_node = `<a href="/projects/view/${x.id}" class="section-card">
+            let view_node = `<a href="/${path}/view/${x.id}" class="section-card">
                                 <div class="image" style="background-color: ${x.back_color}">
-                                    <img src="/files/Projects/${x.saved_folder}/${x.thumbnail}" alt="${x.title}">
+                                    <img src="/files/${path[0].toUpperCase() + path.substr(1)}/${x.saved_folder}/${path === "practices" ? x.created_no + "/" : ""}${x.thumbnail}" alt="${x.title}">
                                 </div>
                                 <div class="info">
                                     <div class="title" style="color: ${x.font_color}">${x.title}</div>
                                     <div class="hash-box">`;
-            x.hash_tag.forEach(tag => view_node += `<span class="hash-tag" title="${tag}">${tag}</span>`);
+            if(path === "projects")
+                x.hash_tag.forEach(tag => view_node += `<span class="hash-tag" title="${tag}">${tag}</span>`);
             view_node +=        `</div>
                                     <div class="info-group">
                                         <div class="calender">
@@ -154,7 +159,7 @@ window.onload = function(){
                                             <span>${dev_date.getFullYear()}년 ${dev_date.getMonth() + 1}월</span>
                                         </div>
                                         <div class="lang">
-                                            ${x.main_lang}
+                                            ${path === "practices" ? x.created_no + "회차" : x.main_lang}
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +171,7 @@ window.onload = function(){
 
         localStorage.setItem("filter", JSON.stringify(filter));
         localStorage.setItem("order", JSON.stringify(order));
-        localStorage.setItem("projects", JSON.stringify(projects));
+        localStorage.setItem("dataList", JSON.stringify(dataList));
         localStorage.setItem("categories", JSON.stringify(categories));
     }
     /*
@@ -175,7 +180,7 @@ window.onload = function(){
     async function loadLocalStorage(){
         filter = JSON.parse(localStorage.getItem("filter"));
         order = JSON.parse(localStorage.getItem("order"));
-        projects = JSON.parse(localStorage.getItem("projects"));
+        dataList = JSON.parse(localStorage.getItem("dataList"));
         categories = JSON.parse(localStorage.getItem("categories"));
 
         filter = filter || [
@@ -191,12 +196,12 @@ window.onload = function(){
 
 
         order = order || {key: "title", value : 0};
-        projects = projects || await loadData();
+        dataList = dataList || await loadData();
         categories = categories || await loadCategories();
 
         localStorage.setItem("filter", JSON.stringify(filter));
         localStorage.setItem("order", JSON.stringify(order));
-        localStorage.setItem("projects", JSON.stringify(projects));
+        localStorage.setItem("dataList", JSON.stringify(dataList));
         localStorage.setItem("categories", JSON.stringify(categories));
     }
 
@@ -245,7 +250,7 @@ window.onload = function(){
                 { year: 2019, data: [] },
                 { year: 2020, data: [] }
             ];
-            projects.forEach(x => {
+            dataList.forEach(x => {
                 /* 카테고리 추가 */
                 let s_year = categories.find( y => y.year == x.dev_start.split("-")[0]);
                 let s_cat = s_year.data.find(z => z.name === x.main_lang);
@@ -378,12 +383,12 @@ window.onload = function(){
             {key: "main_lang", value: ".+"}
         ];
         order = {key : "dev_start", value : 0};
-        projects = await loadData();
+        dataList = await loadData();
         categories = await loadCategories();
 
         localStorage.setItem("filter", JSON.stringify(filter));
         localStorage.setItem("order", JSON.stringify(order));
-        localStorage.setItem("projects", JSON.stringify(projects));
+        localStorage.setItem("dataList", JSON.stringify(dataList));
         localStorage.setItem("categories", JSON.stringify(categories));
         rendering();
     }

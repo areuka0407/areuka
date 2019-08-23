@@ -70,3 +70,20 @@ if(!function_exists("project_path")){
         return public_path("files".DS."Projects".DS.$saved_path);
     }
 }
+
+/**
+ * practice_path($saved_path, $c_no) :: practice 가 저장된 경로를 반환한다.
+ *
+ * @param ::
+ * $saved_path > 해당 연습 파일이 저장된 폴더 명
+ * $c_no > 해당 연습 파일이 몇번째 연습 파일인지의 순번
+ *
+ * @return ::
+ * $path > 해당 연습파일의 경로
+ */
+
+if(!function_exists("practice_path")){
+    function practice_path($saved_path, $c_no){
+        return public_path("files".DS."Practices".DS.$saved_path.DS.$c_no);
+    }
+}
