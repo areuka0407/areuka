@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
@@ -12,10 +13,24 @@ class ProjectController extends Controller
         $this->data = ["page_name" => "projects"];
     }
 
-    public function home()
+    public function home($year = 2018)
     {
         if(!auth()->user()) return redirect()->route("users.login")->with("flash_message", "로그인 후 이용하실 수 있습니다.");
         $data = $this->data;
+
+        $data['condition'] = $condition = (object)[
+            "year" => $year,
+            "category" => isset($_GET['category']) ? "%".$_GET['category']."%" : "%_%",
+        ];
+
+        $filter = [
+            ["dev_start", "LIKE", $year."%"],
+            ["main_lang", "LIKE", $condition->category]
+        ];
+
+        $subTable = "SELECT main_lang AS lang, COUNT(*) AS cnt FROM projects AS p GROUP BY main_lang";
+        $data['categories'] = DB::select("SELECT DISTINCT p.main_lang AS lang, p.dev_start, c.cnt FROM projects AS p LEFT JOIN ($subTable) AS c ON c.lang = p.main_lang WHERE p.dev_start LIKE ?", [$year. "%"]);
+        $data['projects'] = Project::where($filter)->get();
         return view("projects.home", $data);
     }
 
@@ -33,7 +48,6 @@ class ProjectController extends Controller
         $thumbnail = $req->file("thumbnail");
         $execute_file = $req->file("execute_file");
 
-        // dd($data);
 
         $date['dev_start'] = date("Y-m-d", strtotime($data['dev_start']));
         $date['dev_end'] = date("Y-m-d", strtotime($data['dev_end']));

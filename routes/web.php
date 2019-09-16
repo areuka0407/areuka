@@ -101,10 +101,10 @@ Route::group(['middleware' => ['allow.login']], function () {
      */
 
     // 글 목록
-    Route::get("/projects/list", [
+    Route::get("/projects/{year?}", [
         "as" => "projects.home",
         "uses" => "ProjectController@home"
-    ]);
+    ])->where(["year" => "^[0-9]+$"]);
 
     // 글 보기
     Route::get("/projects/view/{id}", [

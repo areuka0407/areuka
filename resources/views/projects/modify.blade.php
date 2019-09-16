@@ -102,7 +102,7 @@
                             <div class="form-group">
                                 <label for="thumbnail" class="form-label">섬네일 이미지</label>
                                 <p class="form-error inline">{{$errors->first('thumbnail')}}</p>
-                                <label for="thumbnail" id="preview-thumbnail" class="preview-thumbnail mt-2" {{is_file(public_path("files".DS.$project->saved_folder.DS.$project->thumbnail)) ? "style=background-image:url('/files/{$project->saved_folder}/{$project->thumbnail}');background-size:contain;" : ""}}></label>
+                                <label for="thumbnail" id="preview-thumbnail" class="preview-thumbnail mt-2" {{is_file(public_path("files".DS."Projects".DS.$project->saved_folder.DS.$project->thumbnail)) ? "style=background-image:url('/files/Projects/{$project->saved_folder}/{$project->thumbnail}');background-size:contain;" : ""}}></label>
                                 <input type="file" id="thumbnail" class="possible-preview" name="thumbnail" data-preview="preview-thumbnail" accept="image/*">
                             </div>
                             <div class="form-group flex">
