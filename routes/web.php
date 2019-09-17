@@ -203,7 +203,8 @@ Route::group(['middleware' => ['allow.auth']], function () {
         "as" => "practices.rewrite",
         "uses" => "PracticeController@rewritePage"
     ])->where(["id" => "[0-9]+"]);
-    Route::post("/practice/rewrite/{id}", [
+
+    Route::post("/practices/rewrite/{id}", [
         "as" => "practices.update",
         "uses" => "PracticeController@updatePractice"
     ])->where(["id" => "[0-9]+"]);
@@ -213,4 +214,10 @@ Route::group(['middleware' => ['allow.auth']], function () {
         "as" => "practices.delete",
         "uses" => "PracticeController@deletePractice"
     ])->where(["id" => "[0-9]+"]);
+
+    /* 파일 다운로드 */
+    Route::get("/practices/download/{id}", [
+        "as" => "practices.download",
+        "uses" => "PracticeController@fileDownload"
+    ])->where("id", "[0-9]+");
 });

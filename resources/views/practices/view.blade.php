@@ -27,7 +27,7 @@
                         </span>
                     </div>
                     <div class="button-group">
-                        <a href="{{route("projects.download", [$practice->id])}}" class="btn btn-color">파일 다운로드</a>
+                        <a href="{{route("practices.download", [$practice->id])}}" class="btn btn-color">파일 다운로드</a>
                         @if (admin())
                             <a href="{{route("practices.delete", $practice->id)}}" class="btn btn-danger f-right" onclick="return confirm('정말 삭제하시겠습니까?')">연습기록 삭제</a>
                             <a href="{{route("practices.rewrite", $practice->id)}}" class="btn f-right mr-2">연습기록 수정</a>

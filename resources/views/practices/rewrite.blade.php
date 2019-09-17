@@ -116,7 +116,7 @@
                     </div>
                     <div class="w-100 pr-5">
                         <button type="reset" class="btn f-right mr-1">다시쓰기</button>
-                        <button type="submit" class="btn f-right mr-3">등록하기</button>
+                        <button type="submit" class="btn f-right mr-3">수정하기</button>
                     </div>
                 </form>
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Practice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -133,13 +134,72 @@ class PracticeController extends Controller
     public function rewritePage($id){
         $data = $this->data;
         $data['practice'] = Practice::find($id);
-        if(!$data['practice']) return route("practices.home", not_find_message("연습 기록"));
+        if(!$data['practice']) return route("practices.home")->with("flash_message", not_find_message("연습 기록"));
+        if(!admin()) return route("practices.home")->with("flash_message", AUTH_MESSAGE);
         return view("practices.rewrite", $data);
     }
-    public function updatePractice($id){
-        /**
-         * 글 수정 프로세스 부분 추가 요망
-         */
+    public function updatePractice(Request $req, $id){
+        $practice = Practice::find($id);
+        if(!$practice) return redirect()->route("practices.home")->with("flash_message", not_find_message("연습 기록"));
+        $input = $req->only("title", "dev_start", "dev_end", "root");
+        $thumbnail = $req->file("thumbnail");
+        $execute_file = $req->file("execute_file");
+
+        $rules = [
+            "title" => "required|max:150",
+            "dev_start" => "required|date_format:Y-m-d",
+            "dev_end" => "required|date_format:Y-m-d",
+            "root" => ["required", "regex:/^\\/.+\\.(php|html|js)$/"],
+        ];
+
+        $errors = [
+            "required" => "내용을 입력해 주세요.",
+            "title.max" => "제목은 150자까지만 입력할 수 있습니다.",
+            "date_format" => "올바른 날짜를 입력해 주세요.",
+            "root.regex" => "올바른 경로를 입력해 주세요."
+        ];
+
+        $validator = Validator::make($input, $rules, $errors);
+
+        if($validator->fails()) return redirect()->route("practices.write")->withInput()->withErrors($validator);
+
+        $saved_folder = $practice->saved_folder;
+        $c_no = $practice->created_no;
+
+        /* 섬네일 이미지 체크 */
+
+        if($thumbnail){
+            // 이미지 파일 제한
+            if(strncmp($thumbnail->getClientMimeType(), "image", 5) !== 0){
+                return redirect()->route("projects.write")->withInput()->withErrors(["thumbnail" => "이미지 파일만 업로드 할 수 있습니다."]);
+            }
+            // 이미지 용량 제한
+            if($thumbnail->getClientSize() > 1024 * 1024 * 2){
+                return redirect()->route("projects.write")->withInput()->withErrors(["thumbnail" => "최대 2MB까지만 업로드 가능합니다."]);
+            }
+            // 이미지 확장자 제한
+            $exts = ["jpg", "png", "jpeg", "gif"];
+            if(!in_array(strtolower($thumbnail->getClientOriginalExtension()), $exts)){
+                return redirect()->route("projects.write")->withInput()->withErrors(["thumbnail" => ".jpg, .jpeg, .png, .gif 확장자 파일만 업로드할 수 있습니다."]);
+            }
+            $input['thumbnail'] = "thumbnail." . $thumbnail->getClientOriginalExtension();
+            if(is_file(practice_path($saved_folder, $c_no).DS.$practice->thumbnail)) unlink(practice_path($saved_folder, $c_no).DS.$practice->thumbnail);
+            $thumbnail->move(practice_path($saved_folder, $c_no), "thumbnail.".$thumbnail->getClientOriginalExtension());
+        }
+
+
+        /* 실행 파일 검사 */
+        if($execute_file){
+            // zip 확장자 검사
+            if(strtolower($execute_file->getClientOriginalExtension()) !== "zip"){
+                return redirect()->route("projects.write")->withInput()->withErrors(["execute_file" => "zip 형식 압축 파일만 업로드할 수 있습니다."]);
+            }
+            if(is_file(practice_path($saved_folder, $c_no).DS."compress.zip")) unlink(practice_path($saved_folder, $c_no).DS."compress.zip");
+            $execute_file->move(practice_path($saved_folder, $c_no), "compress.".$execute_file->getClientOriginalExtension());
+        }
+
+        $practice->update($input);
+        return redirect()->route("practices.view", $id)->with("flash_message", "연습 내용을 수정했습니다.");
     }
 
     /**
@@ -152,5 +212,17 @@ class PracticeController extends Controller
         all_rm(practice_path($practice->saved_folder, $practice->created_no));
         $practice->delete();
         return location_replace(route("practices.home"));
+    }
+
+    /**
+     * 파일 다운로드
+     */
+
+    public function fileDownload($id){
+        $practice = Practice::find($id);
+        if(!$practice) return;
+
+        $referer = $_SERVER['HTTP_REFERER'];
+        return;
     }
 }
