@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Practice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PracticeController extends Controller
@@ -17,9 +18,28 @@ class PracticeController extends Controller
     /**
      * 글 목록 보기
      */
-    public function home()
+    public function home($year = 2018)
     {
-        return view("practices.home", $this->data);
+        $data = $this->data;
+
+        $data['condition'] = $condition = (object)[
+            "year" => $year,
+            "category" => isset($_GET['category']) ? "%".$_GET['category']."%" : "%_%",
+        ];
+
+
+        $order = explode("-", isset($_GET['order']) ? $_GET['order'] : "title-ASC");
+        $data['order'] = $order = (object)["key" => $order[0], "direction" => $order[1]];
+
+        $filter = [
+            ["dev_start", "LIKE", $year."%"],
+            ["title", "LIKE", $condition->category]
+        ];
+
+        $subTable = "SELECT title, COUNT(*) AS cnt FROM practices AS p GROUP BY title";
+        $data['categories'] = DB::select("SELECT DISTINCT p.title, p.dev_start, c.cnt FROM practices AS p LEFT JOIN ($subTable) AS c ON c.title = p.title WHERE p.dev_start LIKE ?", [$year. "%"]);
+        $data['projects'] = Practice::where($filter)->orderBy($order->key, $order->direction)->get();
+        return view("practices.home", $data);
     }
 
     /**

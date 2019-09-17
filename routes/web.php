@@ -130,11 +130,10 @@ Route::group(['middleware' => ['allow.login']], function () {
      */
 
     /* 글 목록 */
-    Route::get("/practices/list", [
+    Route::get("/practices/{year?}", [
         "as" => "practices.home",
         "uses" => "PracticeController@home",
-    ]);
-
+    ])->where(["year" => "[0-9]{4}"]);
 });
 
 
@@ -181,7 +180,7 @@ Route::group(['middleware' => ['allow.auth']], function () {
     ]);
 
     /*
-    기능대회 준비 Skills Club
+    기능대회 준비 Practice
     */
 
     /* 글 쓰기 */

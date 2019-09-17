@@ -23,6 +23,10 @@ class ProjectController extends Controller
             "category" => isset($_GET['category']) ? "%".$_GET['category']."%" : "%_%",
         ];
 
+
+        $order = explode("-", isset($_GET['order']) ? $_GET['order'] : "title-ASC");
+        $data['order'] = $order = (object)["key" => $order[0], "direction" => $order[1]];
+
         $filter = [
             ["dev_start", "LIKE", $year."%"],
             ["main_lang", "LIKE", $condition->category]
@@ -30,7 +34,7 @@ class ProjectController extends Controller
 
         $subTable = "SELECT main_lang AS lang, COUNT(*) AS cnt FROM projects AS p GROUP BY main_lang";
         $data['categories'] = DB::select("SELECT DISTINCT p.main_lang AS lang, p.dev_start, c.cnt FROM projects AS p LEFT JOIN ($subTable) AS c ON c.lang = p.main_lang WHERE p.dev_start LIKE ?", [$year. "%"]);
-        $data['projects'] = Project::where($filter)->get();
+        $data['projects'] = Project::where($filter)->orderBy($order->key, $order->direction)->get();
         return view("projects.home", $data);
     }
 

@@ -73,37 +73,25 @@ window.onload = function(){
     정렬 이동
     */
 
-    $(".o_select").on("change", e => {
-        let key = encodeURIComponent(e.target.children[e.target.selectedIndex].dataset.key);
-        let value = encodeURIComponent(e.target.value === "0" ? "ASC" : "DESC");
-        let addString = "order=" + key + "_" + value;
-        if(key.indexOf("_") !== -1 || value.indexOf("_") !== -1) return; // 오류 방지
+    $(".o_select").on("change", e => selectOrder(e));
+    function selectOrder(e){
+        let key = e.target.children[e.target.selectedIndex].dataset.key;
+        let value = e.target.value === "0" ? "ASC" : "DESC";
+        let addString = "order=" + key + "-" + value;
+        if(key.indexOf("-") !== -1 || value.indexOf("-") !== -1) return; // 오류 방지
 
         let qs = location.search;
         // 쿼리스트링이 존재하지 않는가?
-
-        if(qs.trim().length == 0) {
-            try {
-                window.location.replace(location.host + location.pathname + "?" + addString); // 기존 URL에 바로 삽입
-            } catch(err) {
-                window.location = location.host + location.pathname + "?" + addString;
-            }
-        }
+        if(qs.trim().length == 0) location.assign(location.pathname + "?" + addString); // 기존 URL에 바로 삽입
         else {
             // 정렬 항목이 포함되어 있나?
-            if(qs.match(/^order=/) !== null || qs.match(/&order=/) !== null)
-                qs.replace(/order=(.+)/, addString); // 정렬 항목 변경
+            if(qs.match(/^\?order=/) !== null || qs.match(/&order=/) !== null)
+                qs = qs.replace(/order=([^&]+)/, addString); // 정렬 항목 변경
             else
                 qs += "&" + addString; // 아니면 새로 추가
-
-            try {
-                window.location.replace(location.host + location.pathname + qs);
-            } catch(err) {
-                window.location = location.host + location.pathname + qs;
-            }
-
+            location.assign(location.pathname + qs);
         }
-    });
+    }
 }
 
 
