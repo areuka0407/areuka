@@ -17,7 +17,7 @@
                     <p>새로운 연습활동 등록</p>
                     <span class="design-box"></span>
                 </div>
-                <form action="{{route("practices.update")}}" method="post" autocomplete="off" enctype="multipart/form-data">
+                <form method="post" autocomplete="off" enctype="multipart/form-data">
                     @csrf
                     <div class="w-100 f-left">
                         <div class="f-left w-50">

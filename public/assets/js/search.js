@@ -12,21 +12,20 @@ window.addEventListener("load", function()
 
     sel(".search-btn").addEventListener("click", function(e)
     {
-        // if(location.pathname === "/projects/list") return false;
         if(!e.target.dataset.input) return false;
-        var input = "^.*" + sel("#"+e.target.dataset.input).value + ".*$";
-        var old_val = JSON.parse(localStorage.getItem("filter"));
 
-        if(old_val)
-        {
-            var find = old_val.find(x => x.key === "title");
-            if(find) find.value = input;
-            else old_val.push({key: "title", value: input});
+        // URL에 삽입할 키워드
+        let keyword = sel("#"+e.target.dataset.input).value;
+        let addString = "keyword="+keyword;
+
+        let qs = location.search;
+        if(qs.trim().length !== 0){
+            console.log(qs.match(/^\?keyword=([^&]+)/) || qs.match(/&keyword=([^&]+)/));
+            if(qs.match(/^\?keyword=([^&]+)/) || qs.match(/&keyword=([^&]+)/))
+                addString = qs.replace(/keyword=([^&]+)/, addString);
+            else addString = qs + "&" + addString;
+            location.assign(location.pathname + addString);
         }
-        else old_val = [{key: "title", value: input}];
-
-        localStorage.setItem("filter", JSON.stringify(old_val));
-        location.replace("/projects/list");
-        return true;
+        else location.assign(location.pathname + "?" + addString)
     });
 });

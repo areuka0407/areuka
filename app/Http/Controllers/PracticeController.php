@@ -210,6 +210,7 @@ class PracticeController extends Controller
         if(!$practice) return redirect()->route("home")->with("flash_message", not_find_message("연습 기록"));
         if(!admin()) return redirect()->route("home")->with("flash_message", AUTH_MESSAGE);
         all_rm(practice_path($practice->saved_folder, $practice->created_no));
+        if(count(scandir(practice_path($practice->saved_folder))) === 2) rmdir(practice_path($practice->saved_folder));
         $practice->delete();
         return location_replace(route("practices.home"));
     }
@@ -220,9 +221,20 @@ class PracticeController extends Controller
 
     public function fileDownload($id){
         $practice = Practice::find($id);
-        if(!$practice) return;
+        if(!$practice) return redirect()->route("practices.home")->with("flash_message", not_find_message("연습 기록"));
+
+        $downloadPath = practice_path($practice->saved_folder, $practice->created_no).DS."compress.zip";
+
+        if(!is_file($downloadPath)) return redirect()->route("practices.view", $practice->id)->with("flash_message", not_find_message("연습 기록 파일"));
 
         $referer = $_SERVER['HTTP_REFERER'];
-        return;
+        $articlePath = route("practices.view", $practice->id);
+
+        if($referer !== $articlePath) return redirect()->route("practices.home")->with("flash_message", AUTH_MESSAGE);
+
+        header("Content-type: application/octet-steam");
+        header("Content-Disposition: attachment; filename={$practice->title}.zip");
+
+        return readfile($downloadPath);
     }
 }

@@ -125,8 +125,8 @@ if(!function_exists("project_path")){
  */
 
 if(!function_exists("practice_path")){
-    function practice_path($saved_path, $c_no){
-        return public_path("files".DS."Practices".DS.$saved_path.DS.$c_no);
+    function practice_path($saved_path, $c_no = null){
+        return $c_no === null ? public_path("files".DS."Practices".DS.$saved_path) :  public_path("files".DS."Practices".DS.$saved_path.DS.$c_no);
     }
 }
 

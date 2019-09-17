@@ -243,10 +243,10 @@ class ProjectController extends Controller
 
         /* 접근 제어 */
         if(!auth()->user()) return redirect()->route("users.login")->with("flash_message", LOGIN_MESSAGE);
-        if($referer !== $temp) return redirect()->route("home")->with("flash_message", AUTH_MESSAGE);
+        if($referer !== $temp) return redirect()->route("projects.home")->with("flash_message", AUTH_MESSAGE);
         $project = Project::find($id);
         if(!$project) return redirect()->route("home")->with("flash_message", not_find_message("프로젝트"));
-        $file_path = public_path("files".DS."Projects".DS."{$project->saved_folder}".DS."compress.zip");
+        $file_path = project_path($project->saved_folder).DS."compress.zip";
         if(!is_file($file_path)) return redirect()->route("projects.view", [$id])->with("flash_message", not_find_message("프로젝트의 파일"));
 
         /* 파일 다운로드 */

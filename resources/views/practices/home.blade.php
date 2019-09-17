@@ -58,10 +58,13 @@
                         $a += $x->cnt;
                         return $a;
                     }
+                    function catFilter($a){
+                        return $a !== 'category';
+                    }
                 @endphp
                 <div class="section-category">
                     <div class="categories f-left f_select" data-key="title">
-                        <div class="item f_option{{$condition->category == "%_%" ? " active" : ""}}" data-value="%_%" onclick="location.assign('{{route('practices.home', $condition->year)}}')">
+                        <div class="item f_option{{$condition->category == "%_%" ? " active" : ""}}" data-value="%_%" onclick="location.assign('{{route('practices.home', $condition->year)}}{{$_GET ? "?" : ""}}{{http_build_query(array_filter($_GET, "catFilter", ARRAY_FILTER_USE_KEY))}}')">
                             <span class="name no-mouse">
                                 All
                             </span>

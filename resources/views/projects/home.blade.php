@@ -3,7 +3,7 @@
 @push("head")
     <link rel="stylesheet" href="/assets/css/articles/list.css">
     <script src="/assets/js/articles/list.js" type="text/javascript"></script>
-    {{-- <script src="/assets/js/search.js"></script> --}}
+     <script src="/assets/js/search.js"></script>
 @endpush
 
 @section("contents")
@@ -59,10 +59,13 @@
                         $a += $x->cnt;
                         return $a;
                     }
+                    function catFilter($a){
+                        return $a !== 'category';
+                    }
                 @endphp
                 <div class="section-category">
                     <div class="categories f-left f_select" data-key="main_lang">
-                        <div class="item f_option{{$condition->category == "%_%" ? " active" : ""}}" data-value="%_%" onclick="location.assign('{{route('projects.home', $condition->year)}}')">
+                        <div class="item f_option{{$condition->category == "%_%" ? " active" : ""}}" data-value="%_%" onclick="location.assign('{{route('projects.home', $condition->year)}}{{$_GET ? "?" : ""}}{{http_build_query(array_filter($_GET, "catFilter", ARRAY_FILTER_USE_KEY))}}')">
                             <span class="name no-mouse">
                                 All
                             </span>

@@ -85,7 +85,7 @@ window.onload = function(){
         if(qs.trim().length == 0) location.assign(location.pathname + "?" + addString); // 기존 URL에 바로 삽입
         else {
             // 정렬 항목이 포함되어 있나?
-            if(qs.match(/^\?order=/) !== null || qs.match(/&order=/) !== null)
+            if(qs.match(/^\?order=([^&]+)/) !== null || qs.match(/&order=([^&]+)/) !== null)
                 qs = qs.replace(/order=([^&]+)/, addString); // 정렬 항목 변경
             else
                 qs += "&" + addString; // 아니면 새로 추가
