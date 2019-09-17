@@ -134,6 +134,11 @@ Route::group(['middleware' => ['allow.login']], function () {
         "as" => "practices.home",
         "uses" => "PracticeController@home",
     ])->where(["year" => "[0-9]{4}"]);
+
+    Route::get("/practices/view/{id}", [
+        "as" => "practices.view",
+        "uses" => "PracticeController@viewPage"
+    ])->where(["id" => "[0-9]+"]);
 });
 
 
@@ -158,9 +163,9 @@ Route::group(['middleware' => ['allow.auth']], function () {
     ]);
 
     // 글 수정
-    Route::get("/projects/modify/{id}", [
+    Route::get("/projects/rewrite/{id}", [
         "as" => "projects.rewrite",
-        "uses" => "ProjectController@modifyPage",
+        "uses" => "ProjectController@rewritePage",
     ])->where(["id" => "[0-9]+"]);
     Route::post("/projects/modify/{id}", [
         "as" => "projects.update",
@@ -169,7 +174,7 @@ Route::group(['middleware' => ['allow.auth']], function () {
 
     // 글 삭제
     Route::get("/projects/delete/{id}", [
-        "as" => "project.delete",
+        "as" => "projects.delete",
         "uses" => "ProjectController@deleteProject"
     ])->where(["id" => "[0-9]+"]);
 
@@ -192,4 +197,20 @@ Route::group(['middleware' => ['allow.auth']], function () {
         "as" => "practices.insert",
         "uses" => "PracticeController@insertPractice"
     ]);
+
+    /* 글 수정 */
+    Route::get("/practices/rewrite/{id}", [
+        "as" => "practices.rewrite",
+        "uses" => "PracticeController@rewritePage"
+    ])->where(["id" => "[0-9]+"]);
+    Route::post("/practice/rewrite/{id}", [
+        "as" => "practices.update",
+        "uses" => "PracticeController@updatePractice"
+    ])->where(["id" => "[0-9]+"]);
+
+    /* 글 삭제 */
+    Route::get("/practices/delete/{id}", [
+        "as" => "practices.delete",
+        "uses" => "PracticeController@deletePractice"
+    ])->where(["id" => "[0-9]+"]);
 });

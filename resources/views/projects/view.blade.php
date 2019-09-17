@@ -12,9 +12,17 @@
                     <div class="image" style="background-image: url(/files/projects/{{$project->saved_folder}}/{{$project->thumbnail}})"></div>
                 </div>
                 <div class="info w-50">
-                    <div class="info-group">
-                        <span class="col">프로젝트 명</span>
-                        <span class="val" style="color: {{$project->font_color}}">{{$project->title}}</span>
+                    <div class="flex">
+                        <div class="info-group w-50">
+                            <span class="col">프로젝트 명</span>
+                            <span class="val" style="color: {{$project->font_color}}">{{$project->title}}</span>
+                        </div>
+                        <div class="info-group w-50">
+                            <span class="col">개발 일자</span>
+                            <span class="val">
+                                {{date("Y년 m월 d일", strtotime($project->dev_start))}} ~ {{date("Y년 m월 d일", strtotime($project->dev_end))}}
+                            </span>
+                        </div>
                     </div>
                     <div class="info-group">
                         <span class="col">주 사용 언어</span>
@@ -34,8 +42,8 @@
                     <div class="button-group">
                         <a href="{{route("projects.download", [$project->id])}}" class="btn btn-color">파일 다운로드</a>
                         @if (admin())
-                            <a href="/projects/delete/{{$project->id}}" class="btn btn-danger f-right">프로젝트 삭제</a>
-                            <a href="/projects/modify/{{$project->id}}" class="btn f-right mr-2">프로젝트 수정</a>
+                            <a href="{{route("projects.delete", $project->id)}}" class="btn btn-danger f-right" onclick="return confirm('정말 삭제하시겠습니까?')">프로젝트 삭제</a>
+                            <a href="{{route("projects.rewrite", $project->id)}}" class="btn f-right mr-2">프로젝트 수정</a>
                         @endif
                     </div>
                 </div>

@@ -82,16 +82,44 @@
                     </div>
                     <div class="sort f-right">
                         <select class="o_select">
-                            <option data-key="title" value="0">제목: 오름차순</option>
-                            <option data-key="title" value="1">제목: 내림차순</option>
-                            <option data-key="dev_start" value="0">생성된 날짜: 오름차순</option>
-                            <option data-key="dev_start" value="1">생성된 날짜: 내림차순</option>
-                            <option data-key="main_lang" value="0">주 사용 언어: 오름차순</option>
-                            <option data-key="main_lang" value="1">주 사용 언어: 내림차순</option>
+                            <option data-key="title" value="0"{{$order->key == "title" && $order->direction == "ASC" ? "selected" : ""}}>제목: 오름차순</option>
+                            <option data-key="title" value="1"{{$order->key == "title" && $order->direction == "DESC" ? "selected" : ""}}>제목: 내림차순</option>
+                            <option data-key="dev_start" value="0"{{$order->key == "dev_start" && $order->direction == "ASC" ? "selected" : ""}}>생성된 날짜: 오름차순</option>
+                            <option data-key="dev_start" value="1"{{$order->key == "dev_start" && $order->direction == "DESC" ? "selected" : ""}}>생성된 날짜: 내림차순</option>
+                            <option data-key="created_no" value="0"{{$order->key == "created_no" && $order->direction == "ASC" ? "selected" : ""}}>회차 수: 오름차순</option>
+                            <option data-key="created_no" value="1"{{$order->key == "created_no" && $order->direction == "DESC" ? "selected" : ""}}>회차 수: 내림차순</option>
                         </select>
                     </div>
                 </div>
                 <div class="section-list">
+                    @forelse($projects as $project)
+                        <a href="{{route("practices.view", $project->id)}}" class="section-card">
+                            <div class="image" style="background-color: {{$project->back_color}}">
+                                <img src="/files/Practices/{{$project->saved_folder}}/{{$project->created_no}}/{{$project->thumbnail}}" alt="{{$project->title}}">
+                            </div>
+                            <div class="info">
+                                <div class="title" style="color: {{$project->font_color}}">{{$project->title}}</div>
+                                <div class="hash-box">
+                                    @foreach (explode("|", $project->hash_tag) as $item)
+                                        <span class="hash-tag" title="{{$item}}">{{$item}}</span>
+                                    @endforeach
+                                </div>
+                                <div class="info-group">
+                                    <div class="calender">
+                                        <img src="/assets/images/icons/calender.png" alt="{{date("Y년 m월", strtotime($project->dev_start))}}">
+                                        <span>{{date("Y년 m월", strtotime($project->dev_start))}}</span>
+                                    </div>
+                                    <div class="lang">
+                                        {{$project->created_no}}회차
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    @empty
+                        <div class="text-center">
+                            연습활동이 존재하지 않습니다.
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>

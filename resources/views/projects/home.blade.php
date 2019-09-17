@@ -71,6 +71,7 @@
                             </span>
                         </div>
                         @foreach ($categories as $item)
+                            @php($item->lang = explode("|", $item->lang)[0])
                             <div class="item f_option{{preg_match($condition->category, $item->lang) ? " active" : ""}}" data-value="%{{$item->lang}}%" onclick="location.assign('{{route('projects.home', $condition->year)}}?{{http_build_query(array_merge($_GET, ['category'=>$item->lang]))}}')">
                                 <div class="name no-mouse">
                                     {{$item->lang}}
@@ -117,7 +118,9 @@
                             </div>
                         </a>
                     @empty
-                        <p>추가된 프로젝트가 없습니다.</p>
+                        <div class="text-center">
+                            추가된 프로젝트가 없습니다.
+                        </div>
                     @endforelse
                 </div>
             </div>

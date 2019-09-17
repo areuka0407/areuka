@@ -36,10 +36,19 @@ class PracticeController extends Controller
             ["title", "LIKE", $condition->category]
         ];
 
-        $subTable = "SELECT title, COUNT(*) AS cnt FROM practices AS p GROUP BY title";
-        $data['categories'] = DB::select("SELECT DISTINCT p.title, p.dev_start, c.cnt FROM practices AS p LEFT JOIN ($subTable) AS c ON c.title = p.title WHERE p.dev_start LIKE ?", [$year. "%"]);
+        $data['categories'] = DB::select("SELECT title, COUNT(*) AS cnt FROM practices WHERE dev_start LIKE ?  GROUP BY title", [$year. "%"]);
         $data['projects'] = Practice::where($filter)->orderBy($order->key, $order->direction)->get();
         return view("practices.home", $data);
+    }
+
+    /**
+     * 글 보기
+     */
+    public function viewPage($id){
+        $data = $this->data;
+        $data['practice'] = $practice = Practice::find($id);
+        if(!$practice) return redirect()->route("practices.home")->with("flash_message", not_find_message("연습 기록"));
+        return view("practices.view", $data);
     }
 
     /**
@@ -81,33 +90,67 @@ class PracticeController extends Controller
 
         /* 섬네일 이미지 체크 */
 
-        // 이미지 파일 제한
-        if(strncmp($thumbnail->getClientMimeType(), "image", 5) !== 0){
-            return redirect()->route("projects.write")->withInput()->withErrors(["thumbnail" => "이미지 파일만 업로드 할 수 있습니다."]);
+        if($thumbnail){
+            // 이미지 파일 제한
+            if(strncmp($thumbnail->getClientMimeType(), "image", 5) !== 0){
+                return redirect()->route("projects.write")->withInput()->withErrors(["thumbnail" => "이미지 파일만 업로드 할 수 있습니다."]);
+            }
+            // 이미지 용량 제한
+            if($thumbnail->getClientSize() > 1024 * 1024 * 2){
+                return redirect()->route("projects.write")->withInput()->withErrors(["thumbnail" => "최대 2MB까지만 업로드 가능합니다."]);
+            }
+            // 이미지 확장자 제한
+            $exts = ["jpg", "png", "jpeg", "gif"];
+            if(!in_array(strtolower($thumbnail->getClientOriginalExtension()), $exts)){
+                return redirect()->route("projects.write")->withInput()->withErrors(["thumbnail" => ".jpg, .jpeg, .png, .gif 확장자 파일만 업로드할 수 있습니다."]);
+            }
+            $input['thumbnail'] = "thumbnail." . $thumbnail->getClientOriginalExtension();
+            $thumbnail->move(practice_path($saved_folder, $c_no), "thumbnail.".$thumbnail->getClientOriginalExtension());
         }
-        // 이미지 용량 제한
-        if($thumbnail->getClientSize() > 1024 * 1024 * 2){
-            return redirect()->route("projects.write")->withInput()->withErrors(["thumbnail" => "최대 2MB까지만 업로드 가능합니다."]);
+        else {
+            if(!is_dir(public_path("files/Practices/{$saved_folder}/${c_no}"))) mkdir(public_path("files/Practices/{$saved_folder}/${c_no}"));
+            copy(public_path("assets/images/non-image.png"), public_path("files/Practices/{$saved_folder}/${c_no}/thumbnail.png"));
+            $input['thumbnail'] = "thumbnail.png";
         }
-        // 이미지 확장자 제한
-        $exts = ["jpg", "png", "jpeg", "gif"];
-        if(!in_array(strtolower($thumbnail->getClientOriginalExtension()), $exts)){
-            return redirect()->route("projects.write")->withInput()->withErrors(["thumbnail" => ".jpg, .jpeg, .png, .gif 확장자 파일만 업로드할 수 있습니다."]);
-        }
+
 
         /* 실행 파일 검사 */
-
-        // zip 확장자 검사
-        if(strtolower($execute_file->getClientOriginalExtension()) !== "zip"){
-            return redirect()->route("projects.write")->withInput()->withErrors(["execute_file" => "zip 형식 압축 파일만 업로드할 수 있습니다."]);
+        if($execute_file){
+            // zip 확장자 검사
+            if(strtolower($execute_file->getClientOriginalExtension()) !== "zip"){
+                return redirect()->route("projects.write")->withInput()->withErrors(["execute_file" => "zip 형식 압축 파일만 업로드할 수 있습니다."]);
+            }
+            $execute_file->move(practice_path($saved_folder, $c_no), "compress.".$execute_file->getClientOriginalExtension());
         }
-
-        $input['thumbnail'] = "thumbnail." . $thumbnail->getClientOriginalExtension();
-
-        $thumbnail->move(practice_path($saved_folder, $c_no), "thumbnail.".$thumbnail->getClientOriginalExtension());
-        $execute_file->move(practice_path($saved_folder, $c_no), "compress.".$execute_file->getClientOriginalExtension());
 
         Practice::create($input);
         return redirect()->route("practices.home")->with("flash_message", "연습 내용을 저장했습니다.");
+    }
+
+    /**
+     * 글 수정
+     */
+    public function rewritePage($id){
+        $data = $this->data;
+        $data['practice'] = Practice::find($id);
+        if(!$data['practice']) return route("practices.home", not_find_message("연습 기록"));
+        return view("practices.rewrite", $data);
+    }
+    public function updatePractice($id){
+        /**
+         * 글 수정 프로세스 부분 추가 요망
+         */
+    }
+
+    /**
+     * 글 삭제
+     */
+    public function deletePractice($id){
+        $practice = Practice::find($id);
+        if(!$practice) return redirect()->route("home")->with("flash_message", not_find_message("연습 기록"));
+        if(!admin()) return redirect()->route("home")->with("flash_message", AUTH_MESSAGE);
+        all_rm(practice_path($practice->saved_folder, $practice->created_no));
+        $practice->delete();
+        return location_replace(route("practices.home"));
     }
 }
