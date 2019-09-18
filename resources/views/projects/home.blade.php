@@ -19,7 +19,7 @@
                     </span>
                 </div>
                 <form id="search" onsubmit="return false" autocomplete="off">
-                    <input type="text" id="search-input" class="search-bar" placeholder="검색어를 입력하세요.">
+                    <input type="text" id="search-input" class="search-bar" placeholder="검색어를 입력하세요." value="{{isset($_GET['keyword'])? rtrim($_GET['keyword']) : ""}}" autofocus="true">
                     <button class="search-btn" data-input="search-input"></button>
                 </form>
                 @if (admin())

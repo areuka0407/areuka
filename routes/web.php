@@ -220,4 +220,17 @@ Route::group(['middleware' => ['allow.auth']], function () {
         "as" => "practices.download",
         "uses" => "PracticeController@fileDownload"
     ])->where("id", "[0-9]+");
+
+    /**
+     * 삽질 일기 Tryout
+     */
+
+    Route::get("/tryouts/write", [
+        "as" => "tryouts.write",
+        "uses" => "TryoutController@writePage"
+    ]);
+    Route::post("/tryouts/write", [
+        "as" => "tryouts.insert",
+        "uses" => "TryoutController@insertTryout"
+    ]);
 });

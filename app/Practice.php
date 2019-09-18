@@ -9,4 +9,10 @@ class Practice extends Model
     protected $fillable = [
         "title", "created_no", "saved_folder", "thumbnail", "dev_start", "dev_end", "root"
     ];
+
+    public static function getAttrList()
+    {
+        $model = new Practice();
+        return $model->fillable;
+    }
 }

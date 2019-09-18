@@ -92,7 +92,15 @@ window.onload = function(){
             location.assign(location.pathname + qs);
         }
     }
-}
+
+    /**
+     * Refresh 설정
+     */
+
+    $(".refresh-btn").on("click", function(){
+        location.reload();
+    });
+};
 
 
 /* 데이터 로드 속도는 빠르지만, 자잘한 버그가 많아서 사용 보류  */

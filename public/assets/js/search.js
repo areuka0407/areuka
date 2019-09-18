@@ -16,16 +16,16 @@ window.addEventListener("load", function()
 
         // URL에 삽입할 키워드
         let keyword = sel("#"+e.target.dataset.input).value;
+        let pathname = location.pathname === "/" ? "/projects" : location.pathname;
         let addString = "keyword="+keyword;
 
         let qs = location.search;
         if(qs.trim().length !== 0){
-            console.log(qs.match(/^\?keyword=([^&]+)/) || qs.match(/&keyword=([^&]+)/));
-            if(qs.match(/^\?keyword=([^&]+)/) || qs.match(/&keyword=([^&]+)/))
-                addString = qs.replace(/keyword=([^&]+)/, addString);
+            if(qs.match(/^\?keyword=([^&]*)/) || qs.match(/&keyword=([^&]*)/))
+                addString = qs.replace(/keyword=([^&]*)/, addString);
             else addString = qs + "&" + addString;
-            location.assign(location.pathname + addString);
+            location.assign(pathname + addString);
         }
-        else location.assign(location.pathname + "?" + addString)
+        else location.assign(pathname + "?" + addString)
     });
 });

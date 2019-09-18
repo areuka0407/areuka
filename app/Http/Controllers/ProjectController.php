@@ -21,19 +21,27 @@ class ProjectController extends Controller
         $data['condition'] = $condition = (object)[
             "year" => $year,
             "category" => isset($_GET['category']) ? "%".$_GET['category']."%" : "%_%",
+            "keyword" => isset($_GET['keyword']) ? "%".$_GET['keyword']."%" : "%_%"
         ];
 
 
+        /* 정렬 유효성 검사 */
         $order = explode("-", isset($_GET['order']) ? $_GET['order'] : "title-ASC");
-        $data['order'] = $order = (object)["key" => $order[0], "direction" => $order[1]];
+        $order = count($order) !== 2 ? "title-ASC" : $order;
+        $order[0] = strtolower($order[0]);
+        $order[1] = strtoupper($order[1]);
+        $data['order'] = $order = (object)["key" => isset($order[0]) ? $order[0] : "title", "direction" => isset($order[1]) && ($order[1] === "ASC"||$order[1] === "DESC") ? $order[1] : "ASC"];
+        $order->key = !in_array($order->key, Project::getAttrList()) ? "title" : $order->key;
 
         $filter = [
             ["dev_start", "LIKE", $year."%"],
-            ["main_lang", "LIKE", $condition->category]
+            ["main_lang", "LIKE", $condition->category],
+            ["title", "LIKE", $condition->keyword]
         ];
 
-        $data['categories'] = DB::select("SELECT main_lang AS lang, COUNT(*) AS cnt FROM projects WHERE dev_start LIKE ? GROUP BY main_lang", [$year. "%"]);
+        $data['categories'] = DB::select("SELECT main_lang AS lang, COUNT(*) AS cnt FROM projects WHERE dev_start LIKE ? AND title LIKE ? GROUP BY main_lang", [$year. "%", $condition->keyword]);
         $data['projects'] = Project::where($filter)->orderBy($order->key, $order->direction)->get();
+
         return view("projects.home", $data);
     }
 

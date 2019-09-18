@@ -47,9 +47,9 @@ $(function(){
     $.each(c_input, function(idx, item){
         if($(item).val().trim()) $(item).siblings(".bar").css("width", "100%");
     });
-    c_input.on("keydown change click", function(e){
+    c_input.on("keyup keydown change click", function(e){
         var value = e.target.value.trim();
-        if(value) $(this).siblings(".bar").css("width", "100%");
+        if(value.length > 0) $(this).siblings(".bar").css("width", "100%");
         else $(this).siblings(".bar").css("width", "0");
     });
 
@@ -61,10 +61,10 @@ $(function(){
         if($(item).val().trim()) $(item).siblings(".bar").css("border-width", parseInt($(item).css("width"))+"px");
     });
 
-    c_textarea.on("keydown change click", function(e){
+    c_textarea.on("keyup keydown change click", function(e){
         var width = parseInt($(this).css("width"));
         var value = e.target.value.trim();
-        if(value) $(this).siblings(".bar").css("border-width", width + "px");
+        if(value.length > 0) $(this).siblings(".bar").css("border-width", width + "px");
         else $(this).siblings(".bar").css("border-width", "0");
     });
 

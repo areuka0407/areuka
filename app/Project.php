@@ -19,4 +19,10 @@ class Project extends Model
         "dev_start",
         "dev_end"
     ];
+
+    public static function getAttrList()
+    {
+        $model = new Project();
+        return $model->fillable;
+    }
 }
