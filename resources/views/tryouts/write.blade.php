@@ -53,7 +53,7 @@
                         <div class="form-group">
                             <label for="title" class="form-label">제목</label>
                             <p class="form-error inline">{{$errors->first("title")}}</p>
-                            <div class="custom-input">
+                            <div class="custom-input" data-name="제목" data-max="50">
                                 <input type="text" id="title" name="title" placeholder="제목을 입력하세요" value="{{old("title")}}">
                                 <div class="bar"></div>
                             </div>

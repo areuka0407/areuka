@@ -36,30 +36,14 @@
                         <div class="col">작성일</div>
                         <div class="col">조회수</div>
                     </div>
+                    @foreach($tryouts as $tryout)
                     <div class="row">
-                        <div class="col">1</div>
-                        <div class="col">삽질일기 게시글 입니다.</div>
-                        <div class="col">2019-05-05</div>
-                        <div class="col">125</div>
+                        <div class="col">{{$tryout->id}}</div>
+                        <div class="col">{{$tryout->title}}</div>
+                        <div class="col">{{date("Y-m-d", strtotime($tryout->w_date))}}</div>
+                        <div class="col">{{$tryout->v_count}}</div>
                     </div>
-                    <div class="row">
-                        <div class="col">1</div>
-                        <div class="col">삽질일기 게시글 입니다.</div>
-                        <div class="col">2019-05-05</div>
-                        <div class="col">125</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">1</div>
-                        <div class="col">삽질일기 게시글 입니다.</div>
-                        <div class="col">2019-05-05</div>
-                        <div class="col">125</div>
-                    </div>
-                    <div class="row">
-                        <div class="col">1</div>
-                        <div class="col">삽질일기 게시글 입니다.</div>
-                        <div class="col">2019-05-05</div>
-                        <div class="col">125</div>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="board-tool">
                     <select class="board-sort">

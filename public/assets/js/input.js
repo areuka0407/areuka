@@ -47,10 +47,38 @@ $(function(){
     $.each(c_input, function(idx, item){
         if($(item).val().trim()) $(item).siblings(".bar").css("width", "100%");
     });
+
     c_input.on("keyup keydown change click", function(e){
+        var parents = $(this).parent();
         var value = e.target.value.trim();
-        if(value.length > 0) $(this).siblings(".bar").css("width", "100%");
-        else $(this).siblings(".bar").css("width", "0");
+        window.testParents = parents;
+        if(!parents.data("max"))
+        {
+            if(value.length > 0) $(this).siblings(".bar").css("width", "100%");
+            else $(this).siblings(".bar").css("width", "0");
+        }
+        else
+        {
+            let max = parents.data("max");
+            let name = parents.data("name");
+            let message = parents.parents()[0].querySelector(".form-error");
+
+            if(value.length < max) {
+                if(value.length > 0) $(this).siblings(".bar").css("width", "100%");
+                else $(this).siblings(".bar").css("width", "0");
+                if(message) message.remove();
+            }
+            else {
+                if(e.keyCode !== 8) e.preventDefault();
+                e.target.value = e.target.value.substr(0, 50);
+                $(this).siblings(".bar").css("width", "0");
+                if(!message) {
+                    value.length !== 0 && parents.parent().append($(`<p class="form-error inline">${name}은(는) ${max}자까지 작성하실 수 있습니다.</p>`));
+
+                }
+            }
+        }
+
     });
 
     /*
@@ -211,7 +239,7 @@ $(function(){
                 return;
             }
         }
-    };
+    }
 
     d_input.children(".month").children("input").on("change", function(e){ checkMonth(e.target) });
     function checkMonth(target){
@@ -252,7 +280,7 @@ $(function(){
                 return;
             }
         }
-    };
+    }
 
     d_input.children(".date").children("input").on("change", function(e){ checkDate(e.target) });
     function checkDate(target){
@@ -293,7 +321,7 @@ $(function(){
                 return;
             }
         }
-    };
+    }
 
     $(".custom-date:not(.not_check)").closest("form").on("submit", function(e){
         $.each($(this).find(".custom-date"), function(idx, item) {
