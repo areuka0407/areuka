@@ -507,51 +507,9 @@ footer * { color: #fff; }
 footer .body { height: 230px; }
 footer .left, footer .right { width: 25%; height: 230px; }
 
-/*Left*/
-footer .left { padding: 20px 0; }
-footer .user-profile { height: 70px; }
-footer .user-info { margin-left: 20px; }
-footer .login-message { font-size: 1.1rem; }
-footer .info-group .user_name, footer .login-message a { font-size: 1.3rem; color: #A0ED4F; }
-footer .info-group .user_id, footer .join-message { font-size: 0.9rem; margin-top: 5px;}
+/*Projects*/
 
-
-
-footer .user-alert {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 30px;
-    margin-top: 20px;
-}
-
-footer .alert-group {
-    display: flex;
-    align-items: center;
-    width: 50%; height: 30px;
-    white-space: nowrap;
-}
-footer .alert-group a { margin: 0 10px; }
-footer .alert-group span {
-    padding: 0 15px;
-    background-color: #36AECE;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    color: #fff;
-}
-
-footer .network-share { margin-top: 20px; }
-
-footer .icons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 140px; height: 40px;
-}
-
-/*Center*/
-
-footer .center {
+footer .projects {
     width: 50%;
     height: 230px;
 }
@@ -560,21 +518,31 @@ footer .title {
     width: 100%;
     height: 50px;
     line-height: 50px;
-    text-align: center;
     font-weight: bold;
     font-size: 1.1rem;
+    text-align: center;
+}
+
+footer .sub-title {
+    text-align: left;
 }
 
 footer .contents {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: flex-start;
     text-align: center;
 }
 
-footer .item { margin: 10px 0; }
+footer .item { margin: 10px 0; text-align: left; }
 footer .item  a { color: #D6D6D6; font-size: 0.9rem;}
 
+footer .non-record {
+    color: #808080;
+    font-size: 0.95rem;
+    margin-top: 10px;
+    pointer-events: none;
+}
 
 /*Right*/
 footer .made-info {

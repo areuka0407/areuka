@@ -20,12 +20,14 @@ window.addEventListener("load", function()
         let addString = "keyword="+keyword;
 
         let qs = location.search;
+        // 쿼리 스트링이 있으면
         if(qs.trim().length !== 0){
             if(qs.match(/^\?keyword=([^&]*)/) || qs.match(/&keyword=([^&]*)/))
-                addString = qs.replace(/keyword=([^&]*)/, addString);
-            else addString = qs + "&" + addString;
+                addString = keyword.length > 0 ? qs.replace(/keyword=([^&]*)/, addString) : qs.replace(/(keyword=[^&]*|&keyword=[^&]*|\?keyword=[^&]*)/, "");
+            else addString = keyword.length > 0 ?  qs + "&" + addString : qs;
             location.assign(pathname + addString);
         }
-        else location.assign(pathname + "?" + addString)
+        // 쿼리 스트링이 없으면
+        else location.assign((keyword.length ? pathname + "?" + addString : pathname))
     });
 });

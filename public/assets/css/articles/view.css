@@ -37,6 +37,10 @@
     margin-bottom: 10px;
 }
 
+.info-group .col.title {
+    font-size: 2.5rem!important;
+}
+
 #project-view .val {
     color: rgb(51, 51, 51);
 }

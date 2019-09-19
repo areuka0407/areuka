@@ -522,8 +522,15 @@ Refresh_btn :: 새로고침 버튼
     border-color: #79C92D;
     color: #79C92D;
 }
+.pagination .page.active {
+    border-color: #6C95BD;
+    color: #6C95BD;
+    pointer-events: none;
+}
 
 
 .pagination .next path, .pagination .prev path {
     fill: #AEB6AE;
 }
+
+

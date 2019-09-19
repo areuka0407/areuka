@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
 {
-    function __construct(){
-        $this->data = ["page_name" => "projects"];
+    function __construct()
+    {
+        parent::__construct();
+        $this->data["page_name"] = "projects";
     }
 
     public function home($year = 2018)
@@ -136,7 +138,7 @@ class ProjectController extends Controller
     {
         if(!auth()->user()) return redirect()->route("users.login")->with("flash_message", LOGIN_MESSAGE);
         $data = $this->data;
-        $data['project'] = Project::find($id);
+        $data['project'] = $project = Project::find($id);
         if(!$data['project']) return redirect()->route("projects.home")->with("flash_message", not_find_message("프로젝트"));
         $data['project']->main_lang = explode("|", $data['project']->main_lang);
         $data['project']->hash_tag = explode("|", $data['project']->hash_tag);

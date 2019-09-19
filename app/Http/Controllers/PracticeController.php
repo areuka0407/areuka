@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Validator;
 
 class PracticeController extends Controller
 {
-    private $data;
     function __construct()
     {
-        $this->data = ['page_name' => "practices"];
+        parent::__construct();
+        $this->data['page_name'] = "practices";
     }
 
     /**

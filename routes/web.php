@@ -122,7 +122,11 @@ Route::group(['middleware' => ['allow.login']], function () {
         "as" => "tryouts.home",
         "uses" => "TryoutController@home",
     ]);
-
+    // 글 보기
+    Route::get("/tryouts/view/{id}", [
+        "as" => "tryouts.view",
+        "uses" => "TryoutController@viewPage"
+    ])->where("id", "[0-9]+");
 
     /**
      * 기능대회 준비 Practices
@@ -135,6 +139,7 @@ Route::group(['middleware' => ['allow.login']], function () {
         "uses" => "PracticeController@home",
     ])->where(["year" => "[0-9]{4}"]);
 
+    // 글 보기
     Route::get("/practices/view/{id}", [
         "as" => "practices.view",
         "uses" => "PracticeController@viewPage"
@@ -225,6 +230,7 @@ Route::group(['middleware' => ['allow.auth']], function () {
      * 삽질 일기 Tryout
      */
 
+    // 글 쓰기
     Route::get("/tryouts/write", [
         "as" => "tryouts.write",
         "uses" => "TryoutController@writePage"
@@ -232,5 +238,21 @@ Route::group(['middleware' => ['allow.auth']], function () {
     Route::post("/tryouts/write", [
         "as" => "tryouts.insert",
         "uses" => "TryoutController@insertTryout"
+    ]);
+
+    // 글 수정
+    Route::get("/tryouts/rewrite/{id}", [
+        "as" => "tryouts.rewrite",
+        "uses" => "TryoutController@rewritePage",
+    ])->where("id", "[0-9]+");
+    Route::post("/tryouts/rewrite/{id}", [
+        "as" => "tryouts.update",
+        "uses" => "TryoutController@updateTryout"
+    ])->where("id", "[0-9]+");
+
+    // 글 삭제
+    Route::get("/tryouts/delete/{id}", [
+        "as" => "tryouts.delete",
+        "uses" => "TryoutController@deleteTryout"
     ]);
 });
