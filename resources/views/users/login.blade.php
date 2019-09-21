@@ -6,6 +6,43 @@
     <script type="text/javascript" src="/assets/js/input.js"></script>
 @endpush
 
+@push("anything")
+    <script type="text/javascript">
+        (function() {
+            return new Promise((res, rej) => {
+                let data = new FormData();
+
+
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "/load/logs");
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.setRequestHeader("X-CSRF-TOKEN", document.querySelector("meta[name='csrf-token']").content);
+                xhr.send(JSON.stringify({ip_address: "{{$_SERVER['REMOTE_ADDR']}}"}));
+                xhr.onload = () => res(JSON.parse(xhr.responseText));
+                xhr.onerror = () => rej(xhr.response);
+            });
+        })().then(data => {
+            return new Promise((res, rej) => {
+                console.log(data);
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "/load/users");
+                xhr.setRequestHeader("Content-type", "application/json");
+                xhr.setRequestHeader("X-CSRF-TOKEN", document.querySelector("meta[name='csrf-token']").content);
+                xhr.send(JSON.stringify({id: data[0].uid}));
+                xhr.onload = () => res(JSON.parse(xhr.responseText));
+                xhr.onerror = () => rej(xhr.response);
+            });
+        }).then(data => {
+            console.log(data);
+            let container = document.querySelector(".pre-login");
+            container.querySelector("span").remove();
+            let div = document.createElement("div");
+            div.innerHTML = `<a href="/login/${data[0].user_id}"><span class="color-font">${data[0].user_name}</span> 계정으로 로그인</a>`;
+            container.append(div.firstChild);
+        });
+    </script>
+@endpush
+
 @section("contents")
     <div id="users-container" class="outside">
         <div class="inside">
@@ -38,7 +75,7 @@
                     </div>
                     <div class="form-group">
                         <div class="form-item f-left">
-                            <input type="checkbox" id="login-maintain" value="0">
+                            <input type="checkbox" id="login-maintain" name="maintain" value="0">
                             <label for="login-maintain">로그인 상태 유지</label>
                         </div>
                         <div class="form-item f-right">

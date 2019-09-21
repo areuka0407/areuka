@@ -113,7 +113,7 @@
                                         <div id="back-preview" class="color-picker mr-5" style="background-color: {{old("back_color") ? old("back_color") : $project->back_color}}" data-target="back-color"></div>
                                         <div class="bar"></div>
                                     </div>
-                                    <input type="color" id="back-color" name="back_color" value="{{old("back_color") ? old("back_color") : "#ffffff"}}">
+                                    <input type="color" id="back-color" name="back_color" value="{{old("back_color") ? old("back_color") : $project->back_color}}">
                                 </div>
                                 <div class="flex items-bottom ml-5">
                                     <label for="font-preview" class="form-label mr-2">글자색</label>

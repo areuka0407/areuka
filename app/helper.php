@@ -31,7 +31,9 @@ if(!function_exists("not_find_message")){
 
  if(!function_exists("user")){
      function user(){
-         return auth()->check() ? auth()->user() : false;
+         $key = isset($_COOKIE['SESSION_KEY']) && session()->has("current_key") && $_COOKIE['SESSION_KEY'] === session("current_key") ? session("current_key") : null;
+         $session = App\Session::where("session_key", $key)->first();
+         return $session ? App\User::find($session->uid) : false;
      }
  }
 

@@ -27,13 +27,13 @@ Route::get("/login", [
     "as" => "users.login",
     "uses" => "SessionController@loginPage"
 ]);
+Route::get("/login/{user_id}", [
+    "as" => "users.select_login",
+    "uses" => "SessionController@selectLoginPage"
+])->where("user_id", "[0-9a-z]+");
 Route::post("/login", [
     "as" => "session.create",
     "uses" => "SessionController@createSession"
-]);
-Route::get("/logout", [
-    "as" => "session.destroy",
-    "uses" => "SessionController@destroySession"
 ]);
 
 
@@ -48,8 +48,6 @@ Route::post("/join", [
     "as" => "users.create",
     "uses" => "UserController@insertUser"
 ]);
-Route::get("/users/id/{user_id}", "UserController@issetUserById")
-->where("user_id", "[a-zA-Z0-9]+");
 
 /*
 회원정보 찾기 Remind
@@ -63,6 +61,14 @@ Route::get("/remind/password", [
     "uses" => "remindController@remindPassword"
 ]);
 
+/*
+    Ajax 요청
+    */
+Route::post("/load/{table}", [
+    "as" => "ajax.load",
+    "uses" => "AjaxController@load"
+]);
+
 
 /**
  * 로그인한 사용자만 접근 가능
@@ -71,29 +77,11 @@ Route::get("/remind/password", [
 
 Route::group(['middleware' => ['allow.login']], function () {
     /*
-    Ajax 요청
-    */
-    Route::post("/load/ajax", [
-        "as" => "ajax.load",
-        "uses" => "AjaxController@load"
-    ]);
-
-
-    /*
-    즐겨찾기 Bookmark
-    */
-    Route::get("/bookmarks", [
-        "as" => "bookmarks.home",
-        "uses" => "BookmarkController@home"
-    ]);
-
-
-    /*
-    옵션 Options
-    */
-    Route::get("/options", [
-        "as" => "options.home",
-        "uses" => "OptionController@home"
+     * 로그아웃
+     */
+    Route::get("/logout", [
+        "as" => "session.destroy",
+        "uses" => "SessionController@destroySession"
     ]);
 
     /**
@@ -172,7 +160,7 @@ Route::group(['middleware' => ['allow.auth']], function () {
         "as" => "projects.rewrite",
         "uses" => "ProjectController@rewritePage",
     ])->where(["id" => "[0-9]+"]);
-    Route::post("/projects/modify/{id}", [
+    Route::post("/projects/rewrite/{id}", [
         "as" => "projects.update",
         "uses" => "ProjectController@updateProject",
     ])->where(["id" => "[0-9]+"]);

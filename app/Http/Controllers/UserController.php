@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Log;
+use App\Session;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -44,8 +46,10 @@ class UserController extends Controller
         $validator = Validator::make($request->input(), $form_rules, $form_errors);
         if ($validator->fails()) return redirect()->route("users.join")->withErrors($validator)->withInput();
 
-        if(count(User::where("user_id", $request->post("user_id"))->get()) !== 0)
-            return redirect()->route("users.join")->withErrors(["user_id" => "해당 아이디의 유저가 이미 존재합니다."]);
+        if(User::where("user_id", $request->post("user_id"))->first())
+            return redirect()->route("users.join")->withErrors(["user_id" => "해당 아이디의 유저가 이미 존재합니다."])->withInput();
+        if(User::where("user_email", $request->post("user_email"))->first())
+            return redirect()->route("users.join")->withErrors(["user_email" => "해당 이메일을 가진 유저가 이미 존재합니다."])->withInput();
 
         $user_data = [
             "user_id" => $request->post("user_id"),
@@ -57,6 +61,16 @@ class UserController extends Controller
 
         $user = User::create($user_data);
 
+
+        /* 로그인 작업 */
+        do {
+            $key = str_random();
+        } while(Session::where("session_key", $key)->first());
+        $expire = time() + 3600 * 24;
+        session("current_key", $key);
+        setcookie("SESSION_KEY", $key, $expire); // 하루동안 로그인 유지
+        Session::insert(["uid" => $user->id, "expire" => date("Y-m-d H:i:s", $expire), "session_key", $key]);
+        Log::insert(["uid" => $user->id, "ip_address" => $_SERVER['REMOTE_ADDR'], "logged_at" => date("Y-m-d", time())]);
         auth()->login($user);
 
         return redirect()->route("home");
@@ -67,5 +81,10 @@ class UserController extends Controller
         header("Content-Type: application/json");
         $user = User::where("user_id", $id)->get();
         return response()->json(['exist' => count($user) === 0 ? false : true, 'target' => $user]);
+    }
+
+    public function issetUserByEmail($email){
+        $user = User::where("user_email", $email)->first();
+        return response()->json(['exist' => $user ? true : false, 'target' => $user]);
     }
 }

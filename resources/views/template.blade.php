@@ -31,24 +31,12 @@
 
             <!-- user-form -->
             <div class="user-group right">
-                @if(!auth()->check())
+                @if(!user())
                     <a href="{{route("users.login")}}">로그인</a>
                     <a href="{{route("users.join")}}">회원가입</a>
                 @else
-                    <div class="user-info f-left">
-                        <div class="user-icon f-left">
-                            <img src="/assets/images/users/default.png" alt="유저 프로필">
-                        </div>
-                        <span class="user_name">{{auth()->user()->user_name}}</span>
-                    </div>
-                    <button class="list-btn">
-                        <img class="no-mouse" src="/assets/images/nav-icon.png" alt="nav-icon">
-                        <div class="drop-down list">
-                            <a href="{{route("bookmarks.home")}}">즐겨찾기</a>
-                            <a href="{{route("options.home")}}">설정</a>
-                            <a href="{{route("session.destroy")}}" id="logout">로그아웃</a>
-                        </div>
-                    </button>
+                    <p class="inline"><span class="username">{{user()->user_name}}</span>님 안녕하세요!</p>
+                    <a class="logout" href="{{route("session.destroy")}}" onclick="return confirm('로그아웃 하시겠습니까?')"></a>
                 @endif
             </div>
 

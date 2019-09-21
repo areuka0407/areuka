@@ -32,21 +32,21 @@
             {{--Section Body--}}
             <div class="section-body">
                 <div class="section-time f_select" data-key="dev_start">
-                    <button class="item f_option{{$condition->year == 2018 ? " active" : ""}}" data-value="^2018.*" data-year="2018" onclick="location.assign('{{route('projects.home', 2018)}}')">
+                    <button class="item f_option{{$condition->year == 2018 ? " active" : ""}}" data-value="^2018.*" data-year="2018">
                         <span class="no-mouse">
                             <img src="/assets/images/icons/active_small_pot.png" alt="2018" class="active">
                             <img src="/assets/images/icons/small_pot.png" alt="2018">
                             2018
                         </span>
                     </button>
-                    <button class="item f_option{{$condition->year == 2019 ? " active" : ""}}" data-value="^2019.*" data-year="2019" onclick="location.assign('{{route('projects.home', 2019)}}')">
+                    <button class="item f_option{{$condition->year == 2019 ? " active" : ""}}" data-value="^2019.*" data-year="2019">
                         <span class="no-mouse">
                             <img src="/assets/images/icons/active_medium_pot.png" alt="2019" class="active">
                             <img src="/assets/images/icons/medium_pot.png" alt="2019">
                             2019
                         </span>
                     </button>
-                    <button class="item f_option{{$condition->year == 2020 ? " active" : ""}}" data-value="^2020.*" data-year="2020" onclick="location.assign('{{route('projects.home', 2020)}}')">
+                    <button class="item f_option{{$condition->year == 2020 ? " active" : ""}}" data-value="^2020.*" data-year="2020">
                         <span class="no-mouse">
                             <img src="/assets/images/icons/active_big_pot.png" alt="2020" class="active">
                             <img src="/assets/images/icons/big_pot.png" alt="2020">

@@ -172,6 +172,7 @@ class ProjectController extends Controller
         $date['dev_start'] = date("Y-m-d", strtotime($input['dev_start']));
         $date['dev_end'] = date("Y-m-d", strtotime($input['dev_end']));
 
+//        dd($input['font_color']);
         /* 파일을 제외한 모든 입력값 검사 */
         $rules = [
             "title" => ["required", "max:150"],

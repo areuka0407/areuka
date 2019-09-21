@@ -68,7 +68,11 @@ class TryoutController extends Controller
         $data = $this->data;
         $data['tryout'] = $tryout = Tryout::find($id);
         if(!$tryout) return redirect()->route("tryouts.home")->with("flash_message", not_find_message("일지"));
-        $tryout->update(["v_count" => (int)$tryout->v_count + 1]);
+        if (!isset($_COOKIE['PVC'])){ // Prevent View Count
+            $tryout->update(["v_count" => (int)$tryout->v_count + 1]);
+            setcookie("PVC", str_random(100), time() + 3600, "/tryouts/view/{$id}");
+        }
+
         return view("tryouts.view", $data);
     }
 

@@ -64,7 +64,7 @@
                             </a>
 
                             @for($i=$pagination->start;$i<=$pagination->end;$i++)
-                                <a href="{{route("tryouts.home")."?".http_build_query(array_merge($_GET, ["page" => $i]))}}" class="page{{isset($_GET['page']) && $i == $_GET['page'] ? " active" : ""}}">{{$i}}</a>
+                                <a href="{{route("tryouts.home")."?".http_build_query(array_merge($_GET, ["page" => $i]))}}" class="page{{$i == $pagination->page ? " active" : ""}}">{{$i}}</a>
                             @endfor
 
                             @php($next = $pagination->end + 1)

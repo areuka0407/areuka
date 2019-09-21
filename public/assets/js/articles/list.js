@@ -1,4 +1,37 @@
 window.onload = function(){
+    /**
+     * Animation
+     */
+
+    // 들어오는 애니메이션
+    const length = 5; // section-card 사이의 간격
+    const no = 4; // 한 줄당 section-card 의 개수
+    const list_w = document.querySelector(".section-list") && parseInt(window.getComputedStyle(document.querySelector(".section-list")).getPropertyValue("width")); // section-list의 너비
+    const card_w = (list_w - length) / no; // section-card 의 너비
+    const card_h = 350; // section-card 의 높이
+    document.querySelectorAll(".section-list > .section-card").forEach(function(item, index){
+        setTimeout(function(){
+            item.style.left = (card_w + length) * index + "px";
+            item.style.top = card_h * Math.floor(index / 4) + "px";
+        }, 200 * index);
+    });
+
+    //나가는 애니메이션
+    document.querySelectorAll(".section-time > .item").forEach(button => {
+        button.addEventListener("click", function(e){
+            let year = e.target.dataset.year;
+            document.querySelectorAll(".section-list > .section-card").forEach(function(item, index){
+                setTimeout(function(){
+                    item.style.left = "-" + card_w + 2 * length + "px";
+                }, 200 * index);
+            });
+            setTimeout(function(){
+                location.assign(location.pathname.split("/").splice(0, 2).join("/") + "/" + year);
+            }, document.querySelectorAll(".section-list > .section-card").length * 200);
+        });
+    });
+
+
     /*
     연도 Hover 시 활성화 / 비활성화 설정
     */
