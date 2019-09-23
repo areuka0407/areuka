@@ -2,6 +2,7 @@
 
 @push("head")
     <link rel="stylesheet" href="/assets/css/articles/write.css">
+    <link rel="stylesheet" href="/assets/css/input.css">
     <script type="text/javascript" src="/assets/js/articles/write.js"></script>
     <script type="text/javascript" src="/assets/js/input.js"></script>
     <script src="https://cdn.tiny.cloud/1/l9f9vttyg8px4l55vb21nn6aisx920095glouddm2er3y6kj/tinymce/5/tinymce.min.js"></script>

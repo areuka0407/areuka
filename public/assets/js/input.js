@@ -48,10 +48,16 @@ $(function(){
         if($(item).val().trim()) $(item).siblings(".bar").css("width", "100%");
     });
 
-    c_input.on("keyup keydown change click", function(e){
+    c_input.on("keydown change focus", function(e){
+        const target = e.target;
         var parents = $(this).parent();
         var value = e.target.value.trim();
         window.testParents = parents;
+
+        /**
+         *  Validator
+         *
+         */
         if(!parents.data("max"))
         {
             if(value.length > 0) $(this).siblings(".bar").css("width", "100%");
@@ -70,16 +76,91 @@ $(function(){
             }
             else {
                 if(e.keyCode !== 8) e.preventDefault();
-                e.target.value = e.target.value.substr(0, 50);
+                e.target.value = e.target.value.substr(0, parseInt(max));
                 $(this).siblings(".bar").css("width", "0");
                 if(!message) {
                     value.length !== 0 && parents.parent().append($(`<p class="form-error inline">${name}은(는) ${max}자까지 작성하실 수 있습니다.</p>`));
-
                 }
             }
         }
 
+        /**
+         * 연관 검색어 기능 추가
+         */
+        /* custom-input 에 연관 검색어 설정 (class 부여) 가 있다면 ... */
+        if( parents[0].classList.contains("relate") ){
+            // 에러 방지
+            const table = parents.data("table");
+            const c_key = parents.data("key"); // condition-key; // 조건의 컬럼
+            const c_value = value + "%"; // condition-value; // 조건의 값
+
+            if( !c_key || !c_value ) return;
+
+            let relate_box = parents[0].querySelector(".relate-box");
+
+            if( relate_box === null )
+            {
+                // 새로운 요소 생성
+                parents.css("position", "relative");
+                relate_box = document.createElement("div");
+                relate_box.classList.add("relate-box");
+                parents.append(relate_box);
+            }
+            else if(!value.length) {relate_box.innerHTML = ""; return; }
+
+            // AJAX 요청
+            (function (){
+                return new Promise((res, rej) => {
+                    let data = [
+                        [c_key, "REGEXP",  "^" + value + ".+"],
+                        [c_key, "<>", value]
+                    ];
+
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/load/" + table);
+                    xhr.setRequestHeader("Content-type", "application/json");
+                    xhr.setRequestHeader("X-CSRF-TOKEN", document.querySelector("meta[name='csrf-token']").content);
+                    xhr.send(JSON.stringify(data));
+                    xhr.onload = () => res(JSON.parse(xhr.responseText));
+                    xhr.onerror = () => rej(xhr.response);
+                })
+            })().then( data => {
+                let list = [];
+                data.splice(0, 5).forEach(x => {
+                    if( !list.includes(x[c_key]) ) list.push(x[c_key]);
+                });
+
+                relate_box.innerHTML = '';
+                list.forEach(item => {
+                    let relate_item = document.createElement("div");
+                    relate_item.classList.add("item");
+                    relate_item.innerText = item;
+                    relate_item.addEventListener("click", function(e){
+                        target.value = $(e.target).text();
+                        relate_box.innerHTML = '';
+                    });
+
+                    ( e.target.value.trim() !== "" && new RegExp("^"+ e.target.value.trim() +".+").test(item) && e.target.value.trim() !== item) && relate_box.append(relate_item);
+                });
+            });
+        }
+
+        /**
+         * 방향키 위 아래로 검색어 선택할 수 있도록 설정
+         */
+        const box = e.target.querySelector(".relate-box");
+        if(!box) return;
+        if(e.keyCode !== 38 && e.keyCode !== 40) return;
+
+        const item = box.querySelectorAll(".item");
+        let offset = box.dataset.offset;
+        if(!offset)
+        {
+            console.log(offset);
+            offset = 1;
+        }
     });
+
 
     /*
         Custom Textarea

@@ -9,10 +9,18 @@ window.onload = function(){
     const list_w = document.querySelector(".section-list") && parseInt(window.getComputedStyle(document.querySelector(".section-list")).getPropertyValue("width")); // section-list의 너비
     const card_w = (list_w - length) / no; // section-card 의 너비
     const card_h = 350; // section-card 의 높이
-    document.querySelectorAll(".section-list > .section-card").forEach(function(item, index){
+    const card_cnt = document.querySelectorAll(".section-list > .section-card").length;
+    // section-list 높이 변경
+    if(card_cnt > 0)
         setTimeout(function(){
-            item.style.left = (card_w + length) * index + "px";
-            item.style.top = card_h * Math.floor(index / 4) + "px";
+            document.querySelector(".section-list").style.height =  Math.ceil(card_cnt / 4) * (card_h + 20) + "px";
+        }, 200);
+
+    document.querySelectorAll(".section-list > .section-card").forEach(function(item, index){
+        // section-card 펼치기
+        setTimeout(function(){
+            item.style.left = (card_w + length) * (index % 4) + "px";
+            item.style.top = card_h * Math.floor(index / 4) + 20 * Math.floor(index / 4) + "px";
         }, 200 * index);
     });
 

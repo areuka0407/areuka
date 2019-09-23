@@ -17,7 +17,7 @@ define("NOT_FIND_MESSAGE", "해당 $1를 찾을 수 없습니다.");
 
 if(!function_exists("not_find_message")){
     function not_find_message($name){
-        return preg_replace("/^\$1$/", $name, NOT_FIND_MESSAGE);
+        return str_replace("$1", $name, NOT_FIND_MESSAGE);
     }
 }
 

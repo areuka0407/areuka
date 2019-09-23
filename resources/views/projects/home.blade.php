@@ -3,7 +3,7 @@
 @push("head")
     <link rel="stylesheet" href="/assets/css/articles/list.css">
     <script src="/assets/js/articles/list.js" type="text/javascript"></script>
-     <script src="/assets/js/search.js"></script>
+    <script src="/assets/js/search.js"></script>
 @endpush
 
 @section("contents")

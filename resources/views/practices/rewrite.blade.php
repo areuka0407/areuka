@@ -2,6 +2,7 @@
 
 @push("head")
     <link rel="stylesheet" href="/assets/css/articles/write.css">
+    <link rel="stylesheet" href="/assets/css/input.css">
     <script type="text/javascript" src="/assets/js/articles/write.js"></script>
     <script type="text/javascript" src="/assets/js/input.js"></script>
 @endpush

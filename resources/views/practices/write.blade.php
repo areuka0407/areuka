@@ -2,6 +2,7 @@
 
 @push("head")
     <link rel="stylesheet" href="/assets/css/articles/write.css">
+    <link rel="stylesheet" href="/assets/css/input.css">
     <script type="text/javascript" src="/assets/js/articles/write.js"></script>
     <script type="text/javascript" src="/assets/js/input.js"></script>
 @endpush
@@ -24,7 +25,7 @@
                             <div class="form-group">
                                 <label for="title" class="form-label">대회문제 명</label>
                                 <p class="form-error inline">{{$errors->first('title')}}</p>
-                                <div class="custom-input">
+                                <div class="custom-input relate" data-name="연습 활동" data-max="150" data-table="practices" data-key="title">
                                     <input type="text" id="title" name="title" placeholder="등록할 연습활동의 제목을 작성해 주세요!" value="{{old("title")}}">
                                     <div class="bar"></div>
                                 </div>

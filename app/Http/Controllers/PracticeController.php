@@ -130,7 +130,19 @@ class PracticeController extends Controller
             $execute_file->move(practice_path($saved_folder, $c_no), "compress.".$execute_file->getClientOriginalExtension());
         }
 
-        Practice::create($input);
+        $made = Practice::create($input);
+
+
+        /* 같은 제목끼리 정렬 */
+        $sameTitle = Practice::where("title", $made->title)->orderBy("dev_start", "ASC")->get();
+        $newSavedFolder = c_mkdir("Practices");
+        foreach($sameTitle as $idx => $item){
+            rename(practice_path($item->saved_folder, $item->created_no), practice_path($newSavedFolder, $idx + 1));
+            $item->update(["created_no" => $idx + 1, "saved_folder" => $newSavedFolder]);
+        }
+        rmdir(practice_path($saved_folder));
+
+
         return redirect()->route("practices.home")->with("flash_message", "연습 내용을 저장했습니다.");
     }
 

@@ -214,6 +214,12 @@ Section Body
 .categories .name {
     color: #2F61B2;
     font-size: 1rem;
+
+    /* 텍스트가 일정 범위를 넘어가지 않도록... */
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .categories .item.active .name {
@@ -253,13 +259,12 @@ Section Body
  */
 
 .section-list {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
     margin: 10px 0 50px;
-    min-height: 400px;
     position: relative;
     overflow-x: hidden;
+    height: 400px;
+    overflow: hidden;
+    transition: height 1s;
 }
 
 .section-card {
@@ -316,7 +321,13 @@ Section Body
 }
 
 .section-card .title {
+    width: 100%;
+    padding: 0 10px;
+    text-align: center;
     font-size: 1.2rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .section-card .hash-box {

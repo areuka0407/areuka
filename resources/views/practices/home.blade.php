@@ -99,11 +99,11 @@
                 <div class="section-list">
                     @forelse($projects as $project)
                         <a href="{{route("practices.view", $project->id)}}" class="section-card">
-                            <div class="image" style="background-color: {{$project->back_color}}">
+                            <div class="image">
                                 <img src="/files/Practices/{{$project->saved_folder}}/{{$project->created_no}}/{{$project->thumbnail}}" alt="{{$project->title}}">
                             </div>
                             <div class="info">
-                                <div class="title" style="color: {{$project->font_color}}">{{$project->title}}</div>
+                                <div class="title">{{$project->title}}</div>
                                 <div class="hash-box">
                                     @foreach (explode("|", $project->hash_tag) as $item)
                                         <span class="hash-tag" title="{{$item}}">{{$item}}</span>
