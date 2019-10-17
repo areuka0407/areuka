@@ -331,18 +331,29 @@ footer .foot {
 * 유저 가입 관리 탭
 */
 
-.join-manager[type="list"] {
+#join-manager {
     position: fixed;
-    top: 0; left: 0;
+    top: 0;
     width: 400px;
     height: 100%;
     background-color: rgb(64, 139, 189);
     box-shadow: 3px 0 2px rgba(0, 0, 0, 0.1);
     padding: 20px 10px;
     z-index: 1000;
+    transition: left 0.25s;
 }
 
-.join-manager[type="background"] {
+#join-manager.open {
+    left: 0;
+    transition: left 0.5s;
+}
+
+#join-manager.close {
+    left: -390px;
+    transition: left 0.5s;
+}
+
+.black-layer.join {
     position: fixed;
     top: 0; left: 0;
     width: 100%;
@@ -350,13 +361,13 @@ footer .foot {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.join-manager .title {
+#join-manager .title {
     line-height: 100px;
     height: 100px;
     text-align: center;
 }
 
-.join-manager .title * {
+#join-manager .title * {
     font-size: 1.8rem;
     color: #fff;
 }
@@ -424,11 +435,78 @@ footer .foot {
     width: 50px;
 }
 
-.join-manager .fade {
+#join-manager .fade {
     display: block;
     position: absolute;
     top: 10px; left: 100%;
-    width: 100px; height: 100px;
+    width: 70px; height: 70px;
     border-radius: 0 10px 10px 0;
     background-color: rgb(64, 139, 189);
+    overflow: hidden;
 }
+
+#join-manager .fade div {
+    position: absolute;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+#join-manager .fade.info div {
+    border-radius: 50%;
+}
+
+#join-manager .fade.info div:first-child {
+    width: 30px; height: 30px;
+    top: 10px; left: 15px;
+    transition: width 0.5s, height 0.5s;
+}
+
+#join-manager .fade.info div:last-child {
+    width: 50px; height: 50px;
+    top: 45px; left: 5px;
+    border-radius: 10px;
+    transition: width 0.5s, height 0.5s;
+}
+
+#join-manager .fade.info div:last-child::before {
+    content: '';
+    position: absolute;
+    top: 15px; left: 0;
+    width: 100%; height: 10px;
+    background-color: rgb(64, 139, 189);
+}
+
+#join-manager .fade.info .join-num {
+    position: absolute;
+    display: inline-block;
+    right: 5px; bottom: 5px;
+    width: 25px; height: 25px;
+    text-align: center;
+    background-color: rgb(53, 224, 104);
+    color: rgb(255, 255, 255);
+    z-index: 10;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: none;
+}
+
+
+#join-manager .fade.close div {
+    width: 5px;
+    height: 30px;
+    border-radius: 10px;
+    top: 20px; left: 30px;
+}
+
+#join-manager .fade.close .join-num { display: none; }
+
+#join-manager .fade.close div:first-child {
+    transform: rotate(45deg);
+    transition: transform 0.5s;
+}
+#join-manager .fade.close div:last-child {
+    transform: rotate(-45deg);
+    transition: transform 0.5s;
+}
+
+

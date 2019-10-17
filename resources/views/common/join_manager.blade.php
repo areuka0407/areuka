@@ -1,5 +1,4 @@
-<input type="checkbox" id="join-fade">
-<div class="join-manager" type="list">
+<div id="join-manager" class="close">
     <div class="title">
         <h2>가입신청 목록</h2>
     </div>
@@ -17,9 +16,10 @@
             </div>
         </li>
     </ul>
-    <label for="join-fade" class="fade">
+    <span class="fade info">
         <div></div>
+        <span class="join-num">1</span>
         <div></div>
-    </label>
+    </span>
 </div>
-<label class="join-manager" type="background" for="join-fade"></label>
+<div class="black-layer join" type="background" for="join-fade" style="display: none;"></div>

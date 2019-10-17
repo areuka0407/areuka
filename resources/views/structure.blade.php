@@ -49,5 +49,6 @@
     @endif
 
     @stack("anything")
+    <script type="text/javascript" src="/assets/js/users/join_manager.js"></script>
 </body>
 </html>

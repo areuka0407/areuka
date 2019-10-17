@@ -12,24 +12,6 @@ window.addEventListener("load", function()
 
     sel(".search-btn").addEventListener("click", function(e)
     {
-<<<<<<< HEAD
-        // if(location.pathname === "/projects/list") return false;
-        if(!e.target.dataset.input) return false;
-        var input = "^.*" + sel("#"+e.target.dataset.input).value + ".*$";
-        var old_val = JSON.parse(localStorage.getItem("filter"));
-
-        if(old_val)
-        {
-            var find = old_val.find(x => x.key === "title");
-            if(find) find.value = input;
-            else old_val.push({key: "title", value: input});
-        }
-        else old_val = [{key: "title", value: input}];
-
-        localStorage.setItem("filter", JSON.stringify(old_val));
-        location.replace("/projects/list");
-        return true;
-=======
         if(!e.target.dataset.input) return false;
 
         // URL에 삽입할 키워드
@@ -47,6 +29,5 @@ window.addEventListener("load", function()
         }
         // 쿼리 스트링이 없으면
         else location.assign((keyword.length ? pathname + "?" + addString : pathname))
->>>>>>> origin/dev
     });
 });
