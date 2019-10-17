@@ -14,9 +14,15 @@ class Project extends Model
         "saved_folder",
         "back_color",
         "thumbnail",
-        "font-color",
+        "font_color",
         "root",
         "dev_start",
         "dev_end"
     ];
+
+    public static function getAttrList()
+    {
+        $model = new Project();
+        return $model->fillable;
+    }
 }

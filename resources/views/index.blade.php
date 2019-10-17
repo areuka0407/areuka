@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="/project/1" class="detailed_info">
+                        <a href="{{route("projects.view", $project->id)}}" class="detailed_info">
                             <div class="reading-glass">
                             </div>
                             <p>자세히 보기</p>

@@ -2,6 +2,7 @@
 
 @push("head")
     <link rel="stylesheet" href="/assets/css/users/users.css">
+    <link rel="stylesheet" href="/assets/css/input.css">
     <script src="/assets/js/input.js" type="text/javascript"></script>
     <script src="/assets/js/users/join.js" type="text/javascript"></script>
 @endpush

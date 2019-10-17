@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 class AjaxController extends Controller
 {
-    public function load(Request $req){
-        $s_table = $req->get("table");
-        $data = DB::table($s_table)->get();
+    public function load(Request $req, $table){
+        $condition = $req->all();
+        $data = DB::table($table)->where($condition)->get();
         return response()->json($data);
     }
 }

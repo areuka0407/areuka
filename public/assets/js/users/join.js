@@ -28,8 +28,17 @@ $(function(){
         var err3 = errorMessage("#user_id", regex2.test(user_id), "아이디는 숫자로만 작성할 수 없습니다.");
         if (err3) return;
 
-        $.getJSON("/users/id/"+user_id, function(res){
-            errorMessage("#user_id", res.exist, "이미 해당 아이디가 존재합니다.");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+            },
+            method: "POST",
+            type: "json",
+            url: "/load/users",
+            data: {user_id: user_id},
+            success: function(res){
+                errorMessage("#user_id", res.length > 0, "이미 해당 아이디가 존재합니다.");
+            }
         });
     }
 
@@ -71,7 +80,21 @@ $(function(){
         if (err1) return;
 
         var regex = /^([a-zA-Z0-9-_]+)@([a-zA-Z0-9-_]+)\.([a-zA-Z0-9-_]{3,4})$/;
-        errorMessage("#user_email", !regex.test(email), "정확한 이메일 주소를 작성해 주시기 바랍니다.");
+        var err2 = errorMessage("#user_email", !regex.test(email), "정확한 이메일 주소를 작성해 주시기 바랍니다.");
+        if (err2) return;
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+            },
+            method: "POST",
+            type: "json",
+            url: "/load/users",
+            data: {user_email: email},
+            success: function(res){
+                errorMessage("#user_email", res.length > 0, "이미 해당 이메일을 가진 유저가 존재합니다.");
+            }
+        });
     }
 
     // 닉네임 확인

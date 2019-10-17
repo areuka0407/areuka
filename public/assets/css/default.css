@@ -62,192 +62,9 @@ hr {
 .inline { display: inline; }
 .inline-block { display: inline-block; }
 
-/* Input */
-
-.custom-input {
-    position: relative;
-    width: 100%;
-    height: 52px;
-    margin-bottom: 10px;
-}
-
-.custom-input::before {
-    content: '';
-    position: absolute;
-    left: 0; bottom: 0;
-    width: 100%; height: 2px;
-    background-color: #ddd;
-}
+.color-font { color: #15BC80; font-weight: bold; font-size: 1.05rem; }
 
 
-.custom-input input{
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 40px;
-    margin: 10px 0;
-    padding: 5px 10px;
-    font-size: 1rem;
-    border: none;
-    caret-color: #AED623;
-}
-
-.custom-input .bar {
-    position: absolute;
-    left: 0; bottom: 0;
-    width: 0; height: 2px;
-    background: #2685B5;
-    transition: 1s width;
-}
-
-
-.custom-textarea {
-    position: relative;
-    width: 100%;
-    height: 100px;
-    overflow: hidden;
-}
-
-.custom-textarea::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: #ddd;
-}
-
-.custom-textarea .bar {
-    position: absolute;
-    left: 0; top: 0;
-    border-style: solid;
-    border-width: 0;
-    border-color: #2685B5 transparent transparent #2685B5;
-    transition: 2s border-width;
-}
-
-.custom-textarea textarea {
-    position: absolute;
-    left: 2px; top: 2px;
-    display: block;
-    width: calc(100% - 4px); height: calc(100% - 4px);
-    padding: 5px;
-    border: none;
-    caret-color: #AED623;
-    resize: none;
-    z-index: 1;
-}
-
-.custom-input input::placeholder,
-.custom-textarea textarea::placeholder
-{ color: #828282; }
-
-.form-success { color: #35AF61; }
-.form-error { color: #E15151; }
-.form-help {color: #7C7C7C }
-.form-success,  .form-error, .form-help  {
-    font-size: 0.8rem;
-    padding-left: 5px;
-}
-
-.custom-file {
-    position: relative;
-    width: 100%;
-    height: 50px;
-    overflow: hidden;
-}
-
-.custom-file::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: #ddd;
-}
-
-.custom-file label:not(.upload-btn) {
-    position: absolute;
-    top: 2px; left: 52px;
-    display: block;
-    width: calc(100% - 54px);
-    height: calc(100% - 4px);
-    background-color: #fff;
-    color: #828282;
-    padding-left: 10px;
-    line-height: 50px;
-    z-index: 1;
-}
-
-.custom-file label.upload-btn {
-    position: absolute;
-    left: 0; top: 0;
-    display: inline-block;
-    width: 50px; height: 100%;
-    background-image: url(/assets/images/icons/upload.png);
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-    z-index: 1;
-}
-
-.custom-file .bar {
-    position: absolute;
-    left: 0; top: 0;
-    border-width: 0;
-    border-style: solid;
-    border-color: #2685B5 transparent transparent #2685B5;
-    transition: 2s border-width;
-}
-
-.custom-date {
-    width: 100%;
-    height: 35px;
-    display: flex;
-}
-
-.custom-date .year, .custom-date .month, .custom-date .date {
-    width: 15%;
-    height: 35px;
-    background-color: #ddd;
-    position: relative;
-    overflow: hidden;
-}
-
-.custom-date .year { width: 20%; }
-
-.custom-date .bar {
-    position: absolute;
-    top:0; left: 0;
-    border-width: 0;
-    border-color: #2685B5 transparent transparent #2685B5;
-    border-style: solid;
-    transition: border-width 1s;
-}
-
-.custom-date .year > input, .custom-date .month > input, .custom-date .date > input {
-    border: none;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-}
-.custom-date .year > input::-ms-expand, .custom-date > input::-ms-expand, .custom-date > input::-ms-expand {
-    display: none;
-}
-
-.custom-date input {
-    position: absolute;
-    top: 2px; left: 2px;
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
-    background-color: #fff;
-    text-align: center;
-    text-align-last: center;
-    z-index: 1;
-}
-
-.custom-date .suffix {
-    line-height: 35px;
-    margin: 0 20px 0 10px;
-}
 
 
 /* Button */
@@ -398,7 +215,7 @@ header .right a:hover, header .center a:hover .nav-name, header .center a.active
 
 
 
-header .right a {
+header .right a, header .right p {
     float: left;
     display: block;
     height: 70px;
@@ -410,88 +227,28 @@ header .right a {
     font-size: 0.9rem;
 }
 
-
-header .user-group {
-    height: 70px;
-    line-height: 70px;
+header .right div a, header .right div p {
+    /*line-height: 1rem;*/
+    text-align: left;
+    clear: both;
+    height: 20px;
+    line-height: 50px;
 }
 
-header .user-icon {
-    height: 70px;
-    margin: 0 10px;
-    padding: 10px 0;
+header span.username {
+    color: #15BC80;
+    margin-right : 5px;
 }
 
-header .user_name {
-    font-weight: bold;
-    font-size: 1rem;
+header a.logout {
+    display: inline-block;
+    margin: 23px 0;
+    width: 25px; height: 25px;
+    padding: 0;
+    background-image: url("/assets/images/icons/logout.png");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
-
-header .list-btn {
-    position: relative;
-    width: 50px;
-    height: 50px;
-    margin: 10px 0 10px 20px;
-    /*margin-left: 20px;*/
-    padding: 10px;
-    border: none;
-    background-color: #fff;
-    cursor: pointer;
-    overflow: visible;
-}
-
-header .list-btn img {
-    width: 100%;
-    height: 100%;
-}
-
-header .drop-down {
-    position: absolute;
-    top: 80px; right: -10px;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    width: 100px;
-    z-index: 1000;
-    box-shadow: 1px 1px 5px 3px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-}
-
-header .drop-down::before {
-    content: '';
-    position: absolute;
-    top: -10px; right: 35px;
-    border-width: 5px;
-    border-color: transparent #fff #fff transparent;
-    border-style: solid;
-}
-
-header .drop-down::after {
-    content: '';
-    position: absolute;
-    top: -10px; right: 25px;
-    border-width: 5px;
-    border-color: transparent transparent #fff #fff;
-    border-style: solid;
-}
-
-
-header .drop-down a {
-    width: 100%;
-    height: 40px;
-    line-height: 40px;
-    background-color: #fff;
-}
-header .drop-down a:first-child { border-radius: 5px 5px 0 0; }
-header .drop-down a:last-child { border-radius: 0 0 5px 5px; }
-header .drop-down a:hover { background-color: #DDDDDD; }
-
-
-header .drop-down #logout {
-    background-color: #D53E3E;
-    color: #fff;
-}
-header .drop-down #logout:hover { background-color: #B51F1F }
 
 /*
 Footer
@@ -507,51 +264,9 @@ footer * { color: #fff; }
 footer .body { height: 230px; }
 footer .left, footer .right { width: 25%; height: 230px; }
 
-/*Left*/
-footer .left { padding: 20px 0; }
-footer .user-profile { height: 70px; }
-footer .user-info { margin-left: 20px; }
-footer .login-message { font-size: 1.1rem; }
-footer .info-group .user_name, footer .login-message a { font-size: 1.3rem; color: #A0ED4F; }
-footer .info-group .user_id, footer .join-message { font-size: 0.9rem; margin-top: 5px;}
+/*Projects*/
 
-
-
-footer .user-alert {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 30px;
-    margin-top: 20px;
-}
-
-footer .alert-group {
-    display: flex;
-    align-items: center;
-    width: 50%; height: 30px;
-    white-space: nowrap;
-}
-footer .alert-group a { margin: 0 10px; }
-footer .alert-group span {
-    padding: 0 15px;
-    background-color: #36AECE;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    color: #fff;
-}
-
-footer .network-share { margin-top: 20px; }
-
-footer .icons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 140px; height: 40px;
-}
-
-/*Center*/
-
-footer .center {
+footer .projects {
     width: 50%;
     height: 230px;
 }
@@ -560,21 +275,30 @@ footer .title {
     width: 100%;
     height: 50px;
     line-height: 50px;
-    text-align: center;
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
+}
+
+footer .sub-title {
+    text-align: left;
 }
 
 footer .contents {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: flex-start;
     text-align: center;
 }
 
-footer .item { margin: 10px 0; }
+footer .item { margin: 10px 0; text-align: left; }
 footer .item  a { color: #D6D6D6; font-size: 0.9rem;}
 
+footer .non-record {
+    color: #808080;
+    font-size: 0.95rem;
+    margin-top: 10px;
+    pointer-events: none;
+}
 
 /*Right*/
 footer .made-info {
@@ -599,4 +323,112 @@ footer .foot {
     border-top: #2C323A solid 1px;
     text-align: center;
     line-height: 70px;
+}
+
+
+
+/*
+* 유저 가입 관리 탭
+*/
+
+.join-manager[type="list"] {
+    position: fixed;
+    top: 0; left: 0;
+    width: 400px;
+    height: 100%;
+    background-color: rgb(64, 139, 189);
+    box-shadow: 3px 0 2px rgba(0, 0, 0, 0.1);
+    padding: 20px 10px;
+    z-index: 1000;
+}
+
+.join-manager[type="background"] {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.join-manager .title {
+    line-height: 100px;
+    height: 100px;
+    text-align: center;
+}
+
+.join-manager .title * {
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+#join-list {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(248, 248, 248);
+    overflow-y: auto;
+    border-radius: 10px;
+}
+
+#join-list .item {
+    width: 100%;
+    padding: 10px 0;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1)
+}
+
+#join-list .item .info {
+    width: 75%;
+    float: left;
+    padding: 15px 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#join-list .item .button-group {
+    width: 25%;
+    float: right;
+}
+
+#join-list .item button {
+    padding: 5px 10px;
+    margin: 3px 0;
+    border-radius: 10px;
+    color: rgb(116, 116, 116);
+    border: 0;
+    background: rgb(238, 237, 237);
+    transition: background 0.25s, color 0.25s;
+    cursor: pointer;
+}
+
+#join-list .item button[data-type='accept']:hover {
+    background: rgb(56, 116, 206);
+    color: #fff;
+    transition: background 0.5s, color 0.5s;
+}
+
+#join-list .item button[data-type='cancel']:hover {
+    background: rgb(223, 43, 88);
+    color: #fff;
+    transition: background 0.5s, color 0.5s;
+}
+
+#join-list .item > * {
+    font-size: 1.1rem;
+}
+
+#join-list .column {
+    display: inline-block;
+    width: 50px;
+}
+
+.join-manager .fade {
+    display: block;
+    position: absolute;
+    top: 10px; left: 100%;
+    width: 100px; height: 100px;
+    border-radius: 0 10px 10px 0;
+    background-color: rgb(64, 139, 189);
 }

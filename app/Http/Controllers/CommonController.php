@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class CommonController extends Controller
 {
     function __construct(){
-        $this->data = ["page_name" => "home"];
+        parent::__construct();
+        $this->data["page_name"] = "home";
     }
 
     public function index(){
@@ -19,7 +20,6 @@ class CommonController extends Controller
             $project->main_lang = explode("|", $project->main_lang)[0];
         }
         $data['projects'] = $projects;
-
         return view("index", $data);
     }
 }

@@ -2,6 +2,7 @@
 
 @push("head")
     <link rel="stylesheet" href="/assets/css/articles/write.css">
+    <link rel="stylesheet" href="/assets/css/input.css">
     <script type="text/javascript" src="/assets/js/articles/write.js"></script>
     <script type="text/javascript" src="/assets/js/input.js"></script>
 @endpush
@@ -59,7 +60,7 @@
                                 <p class="form-error inline">{{$errors->first('execute_file')}}</p>
                                 <div class="custom-file mt-2">
                                     <label for="execute_file" class="upload-btn"></label>
-                                    <label for="execute_file">해당 프로젝트의 실행 파일을 업로드 하세요!</label>
+                                    <label for="execute_file" onclick="alert('zip 확장자 파일만 업로드 가능하니 참고하시기 바랍니다.')">해당 프로젝트의 실행 파일을 업로드 하세요!</label>
                                     <input type="file" id="execute_file" name="execute_file">
                                     <div class="bar"></div>
                                 </div>
