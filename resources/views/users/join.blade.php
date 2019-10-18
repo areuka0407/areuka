@@ -15,7 +15,7 @@
                 <a href="/" class="logo">
                     <img src="/assets/images/favicon.png" alt="AREUKA">
                 </a>
-                <form id="join-form" method="POST" autocomplete="off" action="{{ route("users.create") }}">
+                <form id="join-form" method="POST" autocomplete="off" action="{{ route("users.request") }}">
                     @csrf
                     <div class="form-title">
                         <h2>회원 정보를 입력하세요</h2>

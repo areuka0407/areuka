@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\JoinRequest;
 use App\Log;
 use App\Session;
 use App\User;
@@ -18,7 +19,7 @@ class UserController extends Controller
     public function joinPage(){
         return view("users/join");
     }
-    public function insertUser(Request $request)
+    public function requestUser(Request $request)
     {
         $form_rules = [
             "user_id" => "required|max:255|regex:/^([a-z0-9]+)$/|not_regex:/^([0-9]+)$/",
@@ -46,45 +47,60 @@ class UserController extends Controller
         $validator = Validator::make($request->input(), $form_rules, $form_errors);
         if ($validator->fails()) return redirect()->route("users.join")->withErrors($validator)->withInput();
 
-        if(User::where("user_id", $request->post("user_id"))->first())
+        if(User::where("user_id", $request->post("user_id"))->first() || JoinRequest::where("user_id", $request->post("user_id"))->first())
             return redirect()->route("users.join")->withErrors(["user_id" => "해당 아이디의 유저가 이미 존재합니다."])->withInput();
-        if(User::where("user_email", $request->post("user_email"))->first())
+        if(User::where("user_email", $request->post("user_email"))->first() || JoinRequest::where("user_email", $request->post("user_email"))->first())
             return redirect()->route("users.join")->withErrors(["user_email" => "해당 이메일을 가진 유저가 이미 존재합니다."])->withInput();
 
         $user_data = [
             "user_id" => $request->post("user_id"),
             "password" => bcrypt($request->post("password")),
             "user_email" => $request->post("user_email"),
-            "user_name" => $request->post("user_name"),
-            "auth" => 0
+            "user_name" => $request->post("user_name")
         ];
 
-        $user = User::create($user_data);
-
-
-        /* 로그인 작업 */
-        do {
-            $key = str_random();
-        } while(Session::where("session_key", $key)->first());
-        $expire = time() + 3600 * 24;
-        session("current_key", $key);
-        setcookie("SESSION_KEY", $key, $expire); // 하루동안 로그인 유지
-        Session::insert(["uid" => $user->id, "expire" => date("Y-m-d H:i:s", $expire), "session_key", $key]);
-        Log::insert(["uid" => $user->id, "ip_address" => $_SERVER['REMOTE_ADDR'], "logged_at" => date("Y-m-d", time())]);
-        auth()->login($user);
+        JoinRequest::create($user_data);
 
         return redirect()->route("home");
+    }
+
+    public function joinAccept(Request $req){
+        $idx = $req->input("insert_id");
+        $joinReq = JoinRequest::find($idx);
+        if(!$joinReq) return response()->json(["response" => false]);
+        
+        $user = [
+            'user_id' => $joinReq->user_id,
+            'password' => $joinReq->password,
+            'user_name' => $joinReq->user_name,
+            'user_email' => $joinReq->user_email,
+            'auth' => 0
+        ];
+        User::create($user);
+        $joinReq->delete();
+
+        return response()->json(["response" => true]);
+    }
+
+    public function joinCancel(Request $req){
+        $idx = $req->input("delete_id");
+        $joinReq = JoinRequest::find($idx);
+        if(!$joinReq) return response()->json(["response" => false]);
+        $joinReq->delete();
+        return response()->json(["response" => true]);
     }
 
     // 데이터 조회
     public function issetUserById($id){
         header("Content-Type: application/json");
-        $user = User::where("user_id", $id)->get();
+        $user = User::where("user_id", $id)->first();
+        $user = $user ? $user : JoinRequest::where("user_id", $id)->first();
         return response()->json(['exist' => count($user) === 0 ? false : true, 'target' => $user]);
     }
 
     public function issetUserByEmail($email){
         $user = User::where("user_email", $email)->first();
+        $user = $user ? $user : JoinRequest::where("user_email", $email)->first();
         return response()->json(['exist' => $user ? true : false, 'target' => $user]);
     }
 }

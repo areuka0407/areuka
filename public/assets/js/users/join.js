@@ -34,10 +34,24 @@ $(function(){
             },
             method: "POST",
             type: "json",
-            url: "/load/users",
+            url: "/load/join_requests",
             data: {user_id: user_id},
             success: function(res){
-                errorMessage("#user_id", res.length > 0, "이미 해당 아이디가 존재합니다.");
+                var err4 = errorMessage("#user_id", res.length > 0, "이미 해당 아이디가 존재합니다.");
+                if(err4) return;
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+                    },
+                    method: "POST",
+                    type: "json",
+                    url: "/load/users",
+                    data: {user_id: user_id},
+                    success: function(res){
+                        errorMessage("#user_id", res.length > 0, "이미 해당 아이디가 존재합니다.");
+                    }
+                });
             }
         });
     }
@@ -92,7 +106,21 @@ $(function(){
             url: "/load/users",
             data: {user_email: email},
             success: function(res){
-                errorMessage("#user_email", res.length > 0, "이미 해당 이메일을 가진 유저가 존재합니다.");
+                var err3 = errorMessage("#user_email", res.length > 0, "이미 해당 이메일을 가진 유저가 존재합니다.");
+                if(err3) return;
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+                    },
+                    method: "POST",
+                    type: "json",
+                    url: "/load/join_requests",
+                    data: {user_email: email},
+                    success: function(res){
+                        errorMessage("#user_email", res.length > 0, "이미 해당 이메일을 가진 유저가 존재합니다.");
+                    }
+                });
             }
         });
     }

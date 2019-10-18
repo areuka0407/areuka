@@ -45,8 +45,17 @@ Route::get("/join", [
     "uses" => "UserController@joinPage"
 ]);
 Route::post("/join", [
-    "as" => "users.create",
-    "uses" => "UserController@insertUser"
+    "as" => "users.request",
+    "uses" => "UserController@requestUser"
+]);
+
+Route::post("/join/accept", [
+    "as" => "users.accept",
+    "uses" => "UserController@joinAccept"
+]);
+Route::post("/join/cancel", [
+    "as" => "users.cancel",
+    "uses" => "UserController@joinCancel"
 ]);
 
 /*
